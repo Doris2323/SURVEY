@@ -64,7 +64,8 @@ async function confirmReset() {
 
     log('將會清除：');
     log('  • features/step_definitions/*.js');
-    log('  • src/程式碼.js（重置為空白範本）\n');
+    log('  • src/程式碼.js（重置為空白範本）');
+    log('  • src/Index.html（完全刪除）\n');
 
     rl.question('確定要重置嗎？(y/N) ', (answer) => {
       rl.close();
@@ -90,7 +91,7 @@ async function main() {
   log('========================================\n', 'cyan');
 
   // Step 1: 清除 Step Definitions
-  logStep('1/2', '清除 Step Definitions...');
+  logStep('1/3', '清除 Step Definitions...');
 
   const stepDefsPath = path.join(projectRoot, 'features', 'step_definitions');
 
@@ -118,8 +119,20 @@ async function main() {
     logSuccess('已建立空的 step_definitions 資料夾');
   }
 
-  // Step 2: 從 template 還原程式碼
-  logStep('2/2', '還原 src/程式碼.js...');
+  // Step 2: 清除 src/Index.html
+  logStep('2/3', '清除 src/Index.html...');
+
+  const htmlPath = path.join(projectRoot, 'src', 'Index.html');
+  
+  if (fs.existsSync(htmlPath)) {
+    fs.unlinkSync(htmlPath);
+    logSuccess('已刪除 src/Index.html');
+  } else {
+    logWarning('src/Index.html 不存在，跳過');
+  }
+
+  // Step 3: 從 template 還原程式碼
+  logStep('3/3', '還原 src/程式碼.js...');
 
   const gasCodePath = path.join(projectRoot, 'src', '程式碼.js');
   const templatePath = path.join(projectRoot, TEMPLATE_PATH);
