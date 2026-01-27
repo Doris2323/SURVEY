@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>打卡系統</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+      font-size: 32px;
+    }
+    
+    .message {
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      display: none;
+    }
+    
+    .message.show {
+      display: block;
+    }
+    
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .message.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .punch-buttons {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    button {
+      flex: 1;
+      padding: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+    }
+    
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    
+    .btn-in {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .btn-out {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .work-hours {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .work-hours h2 {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    
+    .work-hours .hours {
+      font-size: 36px;
+      font-weight: bold;
+      color: #667eea;
+    }
+    
+    .records {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .records h2 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    
+    .record-item {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .record-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .record-type {
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: white;
+    }
+    
+    .record-type.IN {
+      background: #667eea;
+    }
+    
+    .record-type.OUT {
+      background: #f5576c;
+    }
+    
+    .record-time {
+      color: #666;
+      font-size: 14px;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #667eea;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>打卡系統</h1>
+    
+    <!-- 決策 5: 固定的訊息顯示元素 -->
+    <div id="message" class="message"></div>
+    
+    <div class="punch-buttons">
+      <button id="btn-in" class="btn-in">IN 上班</button>
+      <button id="btn-out" class="btn-out">OUT 下班</button>
+    </div>
+    
+    <div class="work-hours">
+      <h2>累計工時</h2>
+      <div class="hours" id="total-hours">0 分鐘</div>
+    </div>
+    
+    <div class="records">
+      <h2>今日打卡記錄</h2>
+      <div id="records-list" class="loading">載入中...</div>
+    </div>
+  </div>
+
+  <script>
+    // 載入頁面資料
+    function loadPageData() {
+      google.script.run
+        .withSuccessHandler(updatePage)
+        .withFailureHandler(showError)
+        .getWebPageData();
+    }
+    
+    // 更新頁面顯示
+    function updatePage(data) {
+      if (!data || !data.success) {
+        showError('載入資料失敗');
+        return;
+      }
+      
+      // 更新按鈕狀態
+      document.getElementById('btn-in').disabled = !data.canPunchIn;
+      document.getElementById('btn-out').disabled = !data.canPunchOut;
+      
+      // 更新累計工時
+      document.getElementById('total-hours').textContent = data.totalMinutes + ' 分鐘';
+      
+      // 更新記錄列表（決策 3: 記錄已經是倒序，最新在上）
+      const recordsList = document.getElementById('records-list');
+      if (data.records.length === 0) {
+        recordsList.innerHTML = '<p style="text-align:center;color:#999;">尚無打卡記錄</p>';
+      } else {
+        recordsList.innerHTML = data.records.map(record => `
+          <div class="record-item">
+            <span class="record-type ${record['類型']}">${record['類型']}</span>
+            <span class="record-time">${record['時間']}</span>
+          </div>
+        `).join('');
+      }
+    }
+    
+    // 顯示錯誤訊息（決策 5: 使用固定 #message 元素）
+    function showError(error) {
+      const messageDiv = document.getElementById('message');
+      messageDiv.className = 'message error show';
+      messageDiv.textContent = error.message || error;
+      setTimeout(() => {
+        messageDiv.className = 'message';
+        messageDiv.textContent = '';
+      }, 3000);
+    }
+    
+    // 顯示成功訊息（決策 5: 使用固定 #message 元素）
+    function showSuccess(message) {
+      const messageDiv = document.getElementById('message');
+      messageDiv.className = 'message success show';
+      messageDiv.textContent = message;
+      setTimeout(() => {
+        messageDiv.className = 'message';
+        messageDiv.textContent = '';
+      }, 3000);
+    }
+    
+    // 打卡操作
+    function punch(type) {
+      const messageText = type === 'IN' ? '上班打卡成功' : '下班打卡成功';
+      google.script.run
+        .withSuccessHandler(function(result) {
+          if (result.success) {
+            showSuccess(messageText);
+            loadPageData();
+          } else {
+            showError(result.message);
+          }
+        })
+        .withFailureHandler(showError)
+        .punch(type);
+    }
+    
+    // 綁定按鈕事件
+    document.getElementById('btn-in').addEventListener('click', function() {
+      punch('IN');
+    });
+    
+    document.getElementById('btn-out').addEventListener('click', function() {
+      punch('OUT');
+    });
+    
+    // 頁面載入時取得資料
+    window.addEventListener('load', loadPageData);
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "workshop-clock-in",
+  "version": "1.0.0",
+  "description": "AI X BDD Workshop - 打卡系統教學專案",
+  "type": "module",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:feature": "cucumber-js --name",
+    "test:report": "cucumber-js && open reports/cucumber-report.html",
+    "setup": "node scripts/setup.js",
+    "reset": "node scripts/reset.js",
+    "reset:force": "node scripts/reset.js --force"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.0.0",
+    "@google/clasp": "^2.4.0",
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "keywords": [
+    "bdd",
+    "cucumber",
+    "apps-script",
+    "workshop",
+    "tdd"
+  ],
+  "author": "",
+  "license": "MIT"
+}

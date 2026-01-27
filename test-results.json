@@ -1,0 +1,3327 @@
+[
+  {
+    "description": "  作為一個員工\n  我想要記錄上下班打卡時間\n  以便追蹤我的工作時數",
+    "elements": [
+      {
+        "description": "",
+        "id": "打卡記錄;前置條件---必須先有-in-記錄才能打-out（否則失敗）;未上班就下班應失敗",
+        "keyword": "Example",
+        "line": 14,
+        "name": "未上班就下班應失敗",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1868750
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 113749
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 15,
+            "name": "今日無打卡記錄",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:34"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 192875
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 16,
+            "name": "我打卡「OUT」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:57"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 93082
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 17,
+            "name": "打卡結果應該失敗",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:112"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 33375
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "錯誤訊息應包含「請先完成 IN 打卡」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:116"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 43042
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 44625
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;前置條件---必須先有-out-記錄才能再打-in（否則失敗）;連續上班打卡應失敗",
+        "keyword": "Example",
+        "line": 22,
+        "name": "連續上班打卡應失敗",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 394958
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 31875
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 23,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2737041
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 24,
+            "name": "我打卡「IN」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:57"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 195499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 25,
+            "name": "打卡結果應該失敗",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:112"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 26750
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 26,
+            "name": "錯誤訊息應包含「請先完成 OUT 打卡」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:116"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 88666
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 20666
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;前置條件---打卡時間必須與前一筆不同（否則失敗）;不能在相同時間打卡",
+        "keyword": "Example",
+        "line": 32,
+        "name": "不能在相同時間打卡",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 322707
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 24167
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 33,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 171583
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 34,
+            "name": "我在「2026/1/27上午9:00:00」打卡「OUT」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 100832
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 35,
+            "name": "打卡結果應該失敗",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:112"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 36,
+            "name": "錯誤訊息應包含「打卡時間不能相同」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:116"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15583
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 13792
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;前置條件---out-時間必須晚於同日-in-時間（否則失敗）;同日下班時間不能早於上班時間",
+        "keyword": "Example",
+        "line": 40,
+        "name": "同日下班時間不能早於上班時間",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 319167
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 17374
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 41,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27下午2:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 26833
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 42,
+            "name": "我在「2026/1/27上午9:00:00」打卡「OUT」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 81959
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 43,
+            "name": "打卡結果應該失敗",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:112"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11708
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 44,
+            "name": "錯誤訊息應包含「OUT 時間不能早於 IN 時間」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:116"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14957
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 95166
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---無記錄時打-in-應新增一筆-in-記錄;新增上班打卡記錄",
+        "keyword": "Example",
+        "line": 50,
+        "name": "新增上班打卡記錄",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 251708
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 16874
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 51,
+            "name": "我在「2026/1/27上午9:00:00」打卡「IN」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 34166
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 52,
+            "name": "打卡結果應該成功",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:107"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 20124
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 53,
+            "name": "工作表應該有 1 筆記錄",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:124"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 126958
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 54,
+            "name": "最新記錄的類型應該是「IN」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 31208
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 55,
+            "name": "最新記錄的時間應該是「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:141"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 33165
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 15416
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---完成一輪-in/out-後可再打-in;完成一輪打卡後再次上班打卡",
+        "keyword": "Example",
+        "line": 59,
+        "name": "完成一輪打卡後再次上班打卡",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 234582
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14124
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 60,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 23999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 61,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午12:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 20041
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 62,
+            "name": "我在「2026/1/27下午1:00:00」打卡「IN」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 71749
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 63,
+            "name": "打卡結果應該成功",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:107"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11582
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 64,
+            "name": "工作表應該有 3 筆記錄",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:124"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 18000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 11041
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---有-in-記錄時打-out-應新增一筆-out-記錄;新增下班打卡記錄",
+        "keyword": "Example",
+        "line": 68,
+        "name": "新增下班打卡記錄",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 227124
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15790
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 69,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28625
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 70,
+            "name": "我在「2026/1/27下午6:00:00」打卡「OUT」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 64000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 71,
+            "name": "打卡結果應該成功",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:107"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10792
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 72,
+            "name": "工作表應該有 2 筆記錄",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:124"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 41791
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 73,
+            "name": "最新記錄的類型應該是「OUT」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22583
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 74,
+            "name": "最新記錄的時間應該是「2026/1/27下午6:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:141"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22208
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 15625
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---查詢今日記錄應回傳所有今日打卡資料;查詢今日打卡記錄",
+        "keyword": "Example",
+        "line": 78,
+        "name": "查詢今日打卡記錄",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 281667
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 16333
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 79,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 24625
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 80,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午6:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 20250
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 81,
+            "name": "我查詢今日打卡記錄",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:77"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 45541
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "類型",
+                      "時間"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "IN",
+                      "2026/1/27上午9:00:00"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "OUT",
+                      "2026/1/27下午6:00:00"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "Then ",
+            "line": 82,
+            "name": "記錄應該包含：",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:157"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 96792
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 12542
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---查詢今日記錄應回傳所有今日打卡資料;時間欄位應為可解析的字串格式",
+        "keyword": "Example",
+        "line": 87,
+        "name": "時間欄位應為可解析的字串格式",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1047667
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 25583
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 88,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 24875
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 89,
+            "name": "我查詢今日打卡記錄",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:77"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 20374
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 90,
+            "name": "第 1 筆記錄的時間應該是文字格式「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:176"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 39999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 91,
+            "name": "時間欄位應可用於字串比對",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:192"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28749
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 13499
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---工時應為所有-in/out-配對的時間差總和;計算今日工時",
+        "keyword": "Scenario Outline",
+        "line": 103,
+        "name": "計算今日工時",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 435457
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15583
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 96,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22084
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 97,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午6:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 17749
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 98,
+            "name": "我查詢今日工時",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:86"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 42541
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 99,
+            "name": "工時應該是 540 分鐘",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:213"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 26250
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 10209
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---工時應為所有-in/out-配對的時間差總和;計算今日工時",
+        "keyword": "Scenario Outline",
+        "line": 104,
+        "name": "計算今日工時",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 328290
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 31332
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 96,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 19667
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 97,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午12:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22416
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 98,
+            "name": "我查詢今日工時",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:86"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15707
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 99,
+            "name": "工時應該是 180 分鐘",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:213"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28082
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 16375
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---工時應為所有-in/out-配對的時間差總和;計算今日工時",
+        "keyword": "Scenario Outline",
+        "line": 105,
+        "name": "計算今日工時",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 382292
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22541
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 96,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午8:30:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28291
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 97,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午5:30:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22374
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 98,
+            "name": "我查詢今日工時",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:86"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 30208
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 99,
+            "name": "工時應該是 540 分鐘",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:213"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 16917
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 40041
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---工時應為所有-in/out-配對的時間差總和;計算今日工時",
+        "keyword": "Scenario Outline",
+        "line": 109,
+        "name": "計算今日工時",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 295792
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22624
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 96,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 26584
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 97,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27上午11:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 21166
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 98,
+            "name": "我查詢今日工時",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:86"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 17292
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 99,
+            "name": "工時應該是 120 分鐘",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:213"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 16666
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 11082
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---工時應為所有-in/out-配對的時間差總和;計算今日工時",
+        "keyword": "Scenario Outline",
+        "line": 110,
+        "name": "計算今日工時",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 290249
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 96,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27下午2:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 16957
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 97,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午4:30:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14874
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 98,
+            "name": "我查詢今日工時",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:86"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12458
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 99,
+            "name": "工時應該是 150 分鐘",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:213"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11374
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 6832
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---工時應為所有-in/out-配對的時間差總和;計算今日工時",
+        "keyword": "Scenario Outline",
+        "line": 114,
+        "name": "計算今日工時",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 208624
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11250
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 96,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27下午10:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13916
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 97,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/28上午2:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12958
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 98,
+            "name": "我查詢今日工時",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:86"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9958
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 99,
+            "name": "工時應該是 240 分鐘",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:213"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10500
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 6041
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---網頁-api-應回傳完整資訊（記錄、工時、按鈕狀態）;api-回傳無記錄時的狀態",
+        "keyword": "Example",
+        "line": 118,
+        "name": "API 回傳無記錄時的狀態",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 214583
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10041
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 119,
+            "name": "我呼叫網頁 API",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:95"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 36665
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 120,
+            "name": "API 應該回傳成功",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:223"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 16541
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 121,
+            "name": "API 記錄應該有 0 筆",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:229"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 21250
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 122,
+            "name": "API 工時應該是 0 分鐘",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:237"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 18249
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "canPunchIn",
+                      "true"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "canPunchOut",
+                      "false"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "And ",
+            "line": 123,
+            "name": "API 狀態應該是：",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:246"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 54666
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 5792
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---網頁-api-應回傳完整資訊（記錄、工時、按鈕狀態）;api-回傳有-in-記錄時的狀態",
+        "keyword": "Example",
+        "line": 127,
+        "name": "API 回傳有 IN 記錄時的狀態",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 229624
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12374
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 128,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 27250
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 129,
+            "name": "我呼叫網頁 API",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:95"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 23540
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 130,
+            "name": "API 應該回傳成功",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:223"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9582
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "類型",
+                      "時間"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "IN",
+                      "2026/1/27上午9:00:00"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "And ",
+            "line": 131,
+            "name": "API 記錄應該包含：",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:259"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 51374
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 134,
+            "name": "API 工時應該是 0 分鐘",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:237"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11875
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "canPunchIn",
+                      "false"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "canPunchOut",
+                      "true"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "And ",
+            "line": 135,
+            "name": "API 狀態應該是：",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:246"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14417
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 8750
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---網頁-api-應回傳完整資訊（記錄、工時、按鈕狀態）;api-回傳完整-in/out-配對記錄",
+        "keyword": "Example",
+        "line": 139,
+        "name": "API 回傳完整 IN/OUT 配對記錄",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 234667
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10665
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 140,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15208
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 141,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午6:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12958
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 142,
+            "name": "我呼叫網頁 API",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:95"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 20916
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 143,
+            "name": "API 應該回傳成功",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:223"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 6958
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "類型",
+                      "時間"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "IN",
+                      "2026/1/27上午9:00:00"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "OUT",
+                      "2026/1/27下午6:00:00"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "And ",
+            "line": 144,
+            "name": "API 記錄應該包含：",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:259"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 25291
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 148,
+            "name": "API 工時應該是 540 分鐘",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:237"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9749
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "canPunchIn",
+                      "true"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "canPunchOut",
+                      "false"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "And ",
+            "line": 149,
+            "name": "API 狀態應該是：",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:246"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10916
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 5374
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "打卡記錄;後置條件---網頁-api-應回傳完整資訊（記錄、工時、按鈕狀態）;api-回傳多輪-in/out-記錄",
+        "keyword": "Example",
+        "line": 153,
+        "name": "API 回傳多輪 IN/OUT 記錄",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 224166
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10291
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 154,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13750
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 155,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午12:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14124
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 156,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27下午1:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12458
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 157,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午6:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11916
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 158,
+            "name": "我呼叫網頁 API",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:95"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 25542
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 159,
+            "name": "API 應該回傳成功",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:223"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 7709
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "類型",
+                      "時間"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "IN",
+                      "2026/1/27上午9:00:00"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "OUT",
+                      "2026/1/27下午12:00:00"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "IN",
+                      "2026/1/27下午1:00:00"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "OUT",
+                      "2026/1/27下午6:00:00"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "And ",
+            "line": 160,
+            "name": "API 記錄應該包含：",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:259"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15333
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 166,
+            "name": "API 工時應該是 480 分鐘",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:237"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9624
+            }
+          },
+          {
+            "arguments": [
+              {
+                "rows": [
+                  {
+                    "cells": [
+                      "canPunchIn",
+                      "true"
+                    ]
+                  },
+                  {
+                    "cells": [
+                      "canPunchOut",
+                      "false"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "keyword": "And ",
+            "line": 167,
+            "name": "API 狀態應該是：",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:246"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10832
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 6000
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "打卡記錄",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "打卡記錄",
+    "tags": [],
+    "uri": "features/打卡記錄.feature"
+  },
+  {
+    "description": "  作為一個使用者\n  我想要透過網頁介面進行打卡\n  以便方便記錄上下班時間",
+    "elements": [
+      {
+        "description": "",
+        "id": "頁面流程;前置條件---必須先有-in-記錄才能點-out-按鈕（否則顯示錯誤）;未上班就點擊下班按鈕顯示錯誤",
+        "keyword": "Example",
+        "line": 15,
+        "name": "未上班就點擊下班按鈕顯示錯誤",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 217624
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10916
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 16,
+            "name": "我開啟打卡頁面",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "我點擊「OUT 下班」按鈕",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 18,
+            "name": "頁面應該顯示錯誤訊息「請先完成 IN 打卡」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "頁面應該顯示 0 筆打卡記錄",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 6124
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "頁面流程;前置條件---必須先有-out-記錄才能再點-in-按鈕（否則顯示錯誤）;連續點擊上班按鈕顯示錯誤",
+        "keyword": "Example",
+        "line": 25,
+        "name": "連續點擊上班按鈕顯示錯誤",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 225584
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10582
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 26,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14624
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 27,
+            "name": "我開啟打卡頁面",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 28,
+            "name": "我點擊「IN 上班」按鈕",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 29,
+            "name": "頁面應該顯示錯誤訊息「請先完成 OUT 打卡」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 30,
+            "name": "頁面應該顯示 1 筆打卡記錄",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 5415
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "頁面流程;後置條件---頁面載入時應顯示所有-ui-元素;載入頁面",
+        "keyword": "Example",
+        "line": 36,
+        "name": "載入頁面",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 219958
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10665
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 37,
+            "name": "我開啟打卡頁面",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 38,
+            "name": "頁面應該顯示「打卡系統」標題",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 39,
+            "name": "頁面應該有「IN 上班」按鈕",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 40,
+            "name": "頁面應該有「OUT 下班」按鈕",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 41,
+            "name": "頁面應該顯示累計工時「0 分鐘」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 5000
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "頁面流程;後置條件---頁面載入時應顯示今日已有記錄;頁面載入今日記錄",
+        "keyword": "Example",
+        "line": 45,
+        "name": "頁面載入今日記錄",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 206417
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13582
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 46,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13833
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 47,
+            "name": "我開啟打卡頁面",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 48,
+            "name": "頁面應該顯示 1 筆打卡記錄",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 49,
+            "name": "頁面應該顯示記錄「IN - 2026/1/27上午9:00:00」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 4792
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "頁面流程;後置條件---點擊-in-按鈕應新增記錄並顯示成功訊息;點擊上班打卡按鈕",
+        "keyword": "Example",
+        "line": 53,
+        "name": "點擊上班打卡按鈕",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 198625
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10457
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 54,
+            "name": "目前時間是「2026/1/27上午9:00:00」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 55,
+            "name": "我開啟打卡頁面",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 56,
+            "name": "我點擊「IN 上班」按鈕",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 57,
+            "name": "頁面應該顯示成功訊息「上班打卡成功」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 58,
+            "name": "頁面應該顯示 1 筆打卡記錄",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 59,
+            "name": "頁面應該顯示記錄「IN - 2026/1/27上午9:00:00」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 6375
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "頁面流程;後置條件---點擊-out-按鈕應新增記錄並顯示成功訊息;點擊下班打卡按鈕",
+        "keyword": "Example",
+        "line": 63,
+        "name": "點擊下班打卡按鈕",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 233917
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 64,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15082
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 65,
+            "name": "目前時間是「2026/1/27下午6:00:00」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 66,
+            "name": "我開啟打卡頁面",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 67,
+            "name": "我點擊「OUT 下班」按鈕",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 68,
+            "name": "頁面應該顯示成功訊息「下班打卡成功」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 69,
+            "name": "頁面應該顯示 2 筆打卡記錄",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 70,
+            "name": "頁面應該顯示記錄「OUT - 2026/1/27下午6:00:00」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 5917
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "頁面流程;後置條件---累計工時應為所有-in/out-配對的時間差總和;顯示累計工時",
+        "keyword": "Scenario Outline",
+        "line": 82,
+        "name": "顯示累計工時",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 202499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9042
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 75,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12666
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 76,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午6:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11624
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 77,
+            "name": "我開啟打卡頁面",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 78,
+            "name": "頁面應該顯示累計工時「540 分鐘」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 4291
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "頁面流程;後置條件---累計工時應為所有-in/out-配對的時間差總和;顯示累計工時",
+        "keyword": "Scenario Outline",
+        "line": 83,
+        "name": "顯示累計工時",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 198207
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9957
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 75,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12750
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 76,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27上午11:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11875
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 77,
+            "name": "我開啟打卡頁面",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 78,
+            "name": "頁面應該顯示累計工時「120 分鐘」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 5625
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "頁面流程;後置條件---累計工時應為所有-in/out-配對的時間差總和;顯示累計工時",
+        "keyword": "Scenario Outline",
+        "line": 84,
+        "name": "顯示累計工時",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 222500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8749
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 75,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午8:30:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13457
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 76,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午5:30:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11916
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 77,
+            "name": "我開啟打卡頁面",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 78,
+            "name": "頁面應該顯示累計工時「540 分鐘」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 4250
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "頁面流程;後置條件---網頁-api-應回傳今日所有打卡記錄與累計工時;網頁-api-回傳打卡記錄",
+        "keyword": "Example",
+        "line": 88,
+        "name": "網頁 API 回傳打卡記錄",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 217958
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8625
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 89,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11540
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 90,
+            "name": "已有一筆打卡記錄：類型「OUT」時間「2026/1/27下午6:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 22624
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 91,
+            "name": "我透過網頁查詢今日打卡",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 92,
+            "name": "應該回傳打卡記錄和累計工時",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 93,
+            "name": "打卡記錄應該有 2 筆",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 94,
+            "name": "第 1 筆記錄的類型應該是「IN」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 95,
+            "name": "第 1 筆記錄的時間應該是「2026/1/27上午9:00:00」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 96,
+            "name": "第 2 筆記錄的類型應該是「OUT」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 97,
+            "name": "第 2 筆記錄的時間應該是「2026/1/27下午6:00:00」",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 98,
+            "name": "累計工時應該是 540 分鐘",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 4000
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "頁面流程;後置條件---無記錄時-api-應回傳空陣列與零工時;網頁-api-回傳空記錄",
+        "keyword": "Example",
+        "line": 102,
+        "name": "網頁 API 回傳空記錄",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 203500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 7708
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 103,
+            "name": "我透過網頁查詢今日打卡",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 104,
+            "name": "應該回傳打卡記錄和累計工時",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 105,
+            "name": "打卡記錄應該有 0 筆",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 106,
+            "name": "累計工時應該是 0 分鐘",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 4458
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "頁面流程;後置條件---api-回傳資料應正確序列化為文字格式;網頁-api-回傳的資料應該可以正確傳遞到前端",
+        "keyword": "Example",
+        "line": 110,
+        "name": "網頁 API 回傳的資料應該可以正確傳遞到前端",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 192791
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "系統已準備好「打卡記錄」工作表",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10250
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 111,
+            "name": "已有一筆打卡記錄：類型「IN」時間「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15167
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 112,
+            "name": "我透過前端呼叫後端查詢今日打卡",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 113,
+            "name": "前端應該收到有效的回傳值",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 114,
+            "name": "第 1 筆記錄的時間應該是文字格式「2026/1/27上午9:00:00」",
+            "match": {
+              "location": "file:/Users/coomychang/workshop_clock_in_v2/features/step_definitions/%E6%89%93%E5%8D%A1%E8%A8%98%E9%8C%84.steps.js:176"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 4582
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@e2e",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "頁面流程",
+    "line": 3,
+    "keyword": "Feature",
+    "name": "頁面流程",
+    "tags": [
+      {
+        "name": "@e2e",
+        "line": 2
+      }
+    ],
+    "uri": "features/頁面流程.feature"
+  }
+]

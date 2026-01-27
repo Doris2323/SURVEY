@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /Users/coomychang/coomy_life/WBA-Growth-Hacker-Agent/教育訓練/Apps\\\\ script/workshop_clock_in && git checkout:*)",
+      "Bash(cat:*)",
+      "Bash(git fetch:*)",
+      "Bash(ls:*)",
+      "Bash(./.specify/scripts/bash/create-new-feature.sh --json --number 1 --short-name \"ai-bdd-workshop\" \"我要使用這個專案來做 workshop 教學生透過 prompts 來學習 AI X BDD 的方法\")"
+    ]
+  }
+}

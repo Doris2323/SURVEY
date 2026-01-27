@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Clasp credentials (含敏感資訊)
+.clasprc.json
+.clasp.json
+
+# Reports (保留目錄，忽略產生的檔案)
+reports/*.html
+reports/*.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
