@@ -1,19 +1,49 @@
-# Dependencies
-node_modules/
+# Sync .project/sourceTexts/ folder (source text files)
 
-# Clasp credentials (含敏感資訊)
-.clasprc.json
-.clasp.json
+# Don't sync user-specific SQLite databases
+.project/*.sqlite
 
-# Reports (保留目錄，忽略產生的檔案)
-reports/*.html
-reports/*.json
+# Don't sync SQLite auxiliary files
+.project/*.sqlite-wal
+.project/*.sqlite-shm
 
-# OS files
+# Don't sync user-specific files
+.project/complete_drafts.txt
+.project/localProjectSettings.json
+copilot-messages.log
+
+# Archive formats
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.gz
+*.bz2
+*.xz
+
+# Windows executables and installers
+*.exe
+*.msi
+*.bat
+*.cmd
+*.com
+*.scr
+*.dll
+
+# macOS executables and disk images
+*.dmg
+*.pkg
+
+# Disk images and virtual machine files
+*.iso
+*.img
+*.vhd
+*.vmdk
+
+# System files
 .DS_Store
-Thumbs.db
-
-# IDE
-.idea/
-*.swp
-*.swo
+.project/attachments/files/**
+node_modules
