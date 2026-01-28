@@ -7,8 +7,11 @@ export default {
   // Feature 檔案路徑
   paths: ['features/**/*.feature'],
 
-  // Step Definition 路徑（使用 ES Module）
-  import: ['features/step_definitions/**/*.js'],
+  // Step Definition 與 Support 檔案路徑（使用 ES Module）
+  import: [
+    'features/support/**/*.js',
+    'features/step_definitions/**/*.js'
+  ],
 
   // 輸出格式
   format: [
