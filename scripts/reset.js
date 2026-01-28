@@ -7,10 +7,11 @@
  *
  * 功能:
  * 1. 清除 Step Definitions（保留空資料夾）
- * 2. 重置 src/程式碼.js 為空白範本
+ * 2. 清除業務邏輯模組（src/*.js，保留 main.js 入口）
+ * 3. 清除 src/utils/（保留空資料夾）
  *
- * 這讓學生可以從 Feature 開始，走過完整的 BDD 四步驟：
- * 綁定 → 紅燈 → 綠燈 → 重構
+ * 這讓學生可以從 Feature 開始，走過完整的 BDD 三步驟：
+ * 紅燈 → 綠燈 → 重構
  */
 
 import fs from 'fs';
@@ -48,8 +49,8 @@ function logWarning(message) {
   log(`⚠ ${message}`, 'yellow');
 }
 
-// Template 檔案路徑（不放 src/ 下避免 clasp push 錯誤）
-const TEMPLATE_PATH = 'templates/程式碼.template.js';
+// 保留的檔案（入口點）
+const KEEP_FILES = ['main.js'];
 
 async function confirmReset() {
   const rl = readline.createInterface({
@@ -64,8 +65,9 @@ async function confirmReset() {
 
     log('將會清除：');
     log('  • features/step_definitions/*.js');
-    log('  • src/程式碼.js（重置為空白範本）');
-    log('  • src/Index.html（完全刪除）\n');
+    log('  • src/*.js（保留 main.js 入口）');
+    log('  • src/utils/*.js');
+    log('  • src/Index.html\n');
 
     rl.question('確定要重置嗎？(y/N) ', (answer) => {
       rl.close();
@@ -91,7 +93,7 @@ async function main() {
   log('========================================\n', 'cyan');
 
   // Step 1: 清除 Step Definitions
-  logStep('1/3', '清除 Step Definitions...');
+  logStep('1/4', '清除 Step Definitions...');
 
   const stepDefsPath = path.join(projectRoot, 'features', 'step_definitions');
 
@@ -119,30 +121,69 @@ async function main() {
     logSuccess('已建立空的 step_definitions 資料夾');
   }
 
-  // Step 2: 清除 src/Index.html
-  logStep('2/3', '清除 src/Index.html...');
+  // Step 2: 清除業務邏輯模組（保留 main.js）
+  logStep('2/4', '清除業務邏輯模組...');
+
+  const srcPath = path.join(projectRoot, 'src');
+
+  if (fs.existsSync(srcPath)) {
+    const files = fs.readdirSync(srcPath);
+    let count = 0;
+
+    for (const file of files) {
+      if (file.endsWith('.js') && !KEEP_FILES.includes(file)) {
+        const filePath = path.join(srcPath, file);
+        fs.unlinkSync(filePath);
+        log(`  刪除: ${file}`);
+        count++;
+      }
+    }
+
+    if (count > 0) {
+      logSuccess(`已刪除 ${count} 個業務邏輯模組`);
+    } else {
+      logWarning('沒有找到業務邏輯模組');
+    }
+  }
+
+  // Step 3: 清除 src/utils/
+  logStep('3/4', '清除 src/utils/...');
+
+  const utilsPath = path.join(projectRoot, 'src', 'utils');
+
+  if (fs.existsSync(utilsPath)) {
+    const files = fs.readdirSync(utilsPath);
+    let count = 0;
+
+    for (const file of files) {
+      if (file.endsWith('.js')) {
+        const filePath = path.join(utilsPath, file);
+        fs.unlinkSync(filePath);
+        log(`  刪除: utils/${file}`);
+        count++;
+      }
+    }
+
+    if (count > 0) {
+      logSuccess(`已刪除 ${count} 個工具模組`);
+    } else {
+      logWarning('沒有找到工具模組');
+    }
+  } else {
+    fs.mkdirSync(utilsPath, { recursive: true });
+    logSuccess('已建立空的 utils 資料夾');
+  }
+
+  // Step 4: 清除 src/Index.html
+  logStep('4/4', '清除 src/Index.html...');
 
   const htmlPath = path.join(projectRoot, 'src', 'Index.html');
-  
+
   if (fs.existsSync(htmlPath)) {
     fs.unlinkSync(htmlPath);
     logSuccess('已刪除 src/Index.html');
   } else {
     logWarning('src/Index.html 不存在，跳過');
-  }
-
-  // Step 3: 從 template 還原程式碼
-  logStep('3/3', '還原 src/程式碼.js...');
-
-  const gasCodePath = path.join(projectRoot, 'src', '程式碼.js');
-  const templatePath = path.join(projectRoot, TEMPLATE_PATH);
-
-  if (!fs.existsSync(templatePath)) {
-    logWarning(`找不到 template 檔案: ${TEMPLATE_PATH}`);
-    logWarning('請確認 templates/程式碼.template.js 存在');
-  } else {
-    fs.copyFileSync(templatePath, gasCodePath);
-    logSuccess('已從 template 還原 src/程式碼.js');
   }
 
   // 完成
@@ -152,19 +193,23 @@ async function main() {
 
   log('現在你可以開始 BDD 流程：', 'cyan');
   log('');
-  log('  1. 閱讀 features/打卡記錄.feature');
+  log('  1. 閱讀 features/*.feature');
   log('');
-  log('  2. 綁定 - 複製以下指令給 AI：');
-  log('     do: @prompts/01-Gherkin-to-Step-Definition.md');
-  log('     for: @features/打卡記錄.feature');
+  log('  2. 紅燈 - 複製以下指令給 AI：');
+  log('     do: @prompts/01-紅燈.md');
+  log('     for: @features/XXX.feature');
   log('');
-  log('  3. 紅燈 - 執行 npm test 看到測試失敗');
+  log('  3. 執行 npm test 看到測試失敗（紅燈）');
   log('');
   log('  4. 綠燈 - 複製以下指令給 AI：');
-  log('     do: @prompts/03-綠燈.md');
-  log('     for: @features/打卡記錄.feature');
+  log('     do: @prompts/02-綠燈.md');
+  log('     for: @features/XXX.feature');
   log('');
-  log('  5. 執行 npm test 看到綠燈');
+  log('  5. 執行 npm test 看到測試通過（綠燈）');
+  log('');
+  log('  6. 重構 - 複製以下指令給 AI：');
+  log('     do: @prompts/03-重構.md');
+  log('     for: @src/xxx.js');
   log('');
   log('開始你的 BDD 學習之旅！\n', 'green');
 }
