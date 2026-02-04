@@ -563,3 +563,63 @@ const mockRun = createMockGoogleScriptRun(gasContext, { strictMode: true });
 - `google.script.run` 返回 `null` → 可能有 Date/NaN/Function
 - `Invalid Date` → 可能是中文日期格式未正確解析
 - 測試通過但部署失敗 → Mock 環境與真實環境行為不一致
+
+---
+
+## 六、Mock 環境功能清單
+
+### SpreadsheetApp
+
+- `getActiveSpreadsheet()` - 取得試算表
+- `openById(id)` - 用 ID 開啟試算表
+- `getSheetByName(name)` - 取得工作表
+- `insertSheet(name)` - 新增工作表
+- `sheet.clear()` - 清空工作表
+- `sheet.appendRow([])` - 新增列
+- `sheet.getDataRange().getValues()` - 取得所有資料（含 Date 物件）
+- `sheet.getDataRange().getDisplayValues()` - 取得顯示值（純字串）
+
+### HtmlService
+
+- `createHtmlOutputFromFile(filename)` - 讀取 HTML 檔案
+- `createTemplateFromFile(filename)` - 建立模板（支援 `<?= ?>` 語法）
+- `setTitle(title)` - 設定標題
+- `getContent()` - 取得 HTML 內容
+- 檔案不存在時拋出錯誤（可被測試捕捉）
+
+### Utilities
+
+- `getUuid()` - 生成 UUID
+- `formatDate(date, tz, format)` - 格式化日期
+- `sleep(ms)` - 暫停（Mock 中不實際等待）
+
+### Session
+
+- `getScriptTimeZone()` - 取得時區
+- `getActiveUser().getEmail()` - 取得當前使用者 Email
+
+### google.script.run
+
+- 動態代理任何後端函式
+- 序列化檢查（Date、NaN 偵測）
+- `withSuccessHandler()` / `withFailureHandler()` 支援
+
+---
+
+## 七、破壞性測試建議
+
+驗證 Mock 環境正確性的方法：
+
+```bash
+# 測試 1: 移除 HTML 檔案，測試應該失敗
+mv src/Index.html src/Index.html.backup
+npm test  # 應該報錯
+mv src/Index.html.backup src/Index.html
+
+# 測試 2: 在程式碼中使用 getValues() 返回 Date 物件
+# 然後透過 google.script.run 回傳
+# 應該看到序列化警告或失敗
+
+# 測試 3: 忘記設定模板變數
+# 測試應該報錯：「模板錯誤：變數 'xxx' 未定義」
+```

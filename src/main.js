@@ -10,5 +10,28 @@
 function doGet() {
   return HtmlService.createHtmlOutputFromFile('Index')
     .setTitle('打卡系統')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+}
+
+/**
+ * 封裝給前端呼叫的 API
+ */
+function apiClockIn(type) {
+  try {
+    return clockIn(type);
+  } catch (e) {
+    throw new Error(e.message);
+  }
+}
+
+function apiGetTodayData() {
+  try {
+    return {
+      records: getTodayRecords(),
+      workHours: getTodayWorkHours()
+    };
+  } catch (e) {
+    throw new Error(e.message);
+  }
 }

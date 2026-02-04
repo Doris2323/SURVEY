@@ -1,0 +1,25 @@
+
+# 事件風暴建模過程中，遵循 DFS 澄清原則 - 每批同時處理的 Command / Read Model 數量（00-es 用）
+DFS_BANDWIDTH: 3
+
+# Commands + Read Models 的總數上限（00-es 用）
+MAX_ES_ITEMS: 5
+
+
+# 所有規格產出物的根目錄
+SPECS_ROOT_DIR: 
+
+# 事件風暴規格檔案（00-es 的產出，01-formulation 的輸入）
+ES_SPEC_PATH: ${SPECS_ROOT_DIR}/es.md
+
+# Feature 檔案的存放目錄
+FEATURE_SPECS_DIR: ${SPECS_ROOT_DIR}/features
+
+# api.yml 的存放目錄
+API_SPECS_DIR: ${SPECS_ROOT_DIR}
+
+# erm.dbml 的存放目錄
+ENTITY_SPECS_DIR: ${SPECS_ROOT_DIR}
+
+# 每回合最多提問數（Sub-question 不計入）
+MAX_QUESTIONS_PER_ROUND: 10
