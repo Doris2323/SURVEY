@@ -64,7 +64,7 @@ async function confirmReset() {
     log('========================================\n', 'yellow');
 
     log('將會清除：');
-    log('  • features/step_definitions/*.js');
+    log('  • specs/features/step_definitions/*.js');
     log('  • src/*.js（保留 main.js 入口）');
     log('  • src/utils/*.js');
     log('  • src/Index.html\n');
@@ -95,7 +95,7 @@ async function main() {
   // Step 1: 清除 Step Definitions
   logStep('1/4', '清除 Step Definitions...');
 
-  const stepDefsPath = path.join(projectRoot, 'features', 'step_definitions');
+  const stepDefsPath = path.join(projectRoot, 'specs', 'features', 'step_definitions');
 
   if (fs.existsSync(stepDefsPath)) {
     const files = fs.readdirSync(stepDefsPath);
@@ -193,17 +193,17 @@ async function main() {
 
   log('現在你可以開始 BDD 流程：', 'cyan');
   log('');
-  log('  1. 閱讀 features/*.feature');
+  log('  1. 閱讀 specs/features/*.feature');
   log('');
   log('  2. 紅燈 - 複製以下指令給 AI：');
   log('     do: @prompts/01-紅燈.md');
-  log('     for: @features/XXX.feature');
+  log('     for: @specs/features/XXX.feature');
   log('');
   log('  3. 執行 npm test 看到測試失敗（紅燈）');
   log('');
   log('  4. 綠燈 - 複製以下指令給 AI：');
   log('     do: @prompts/02-綠燈.md');
-  log('     for: @features/XXX.feature');
+  log('     for: @specs/features/XXX.feature');
   log('');
   log('  5. 執行 npm test 看到測試通過（綠燈）');
   log('');

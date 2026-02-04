@@ -119,12 +119,12 @@ async function main() {
   // Step 3: 建立 step_definitions 資料夾
   logStep('3/4', '建立測試資料夾結構...');
 
-  const stepDefsPath = path.join(projectRoot, 'features', 'step_definitions');
+  const stepDefsPath = path.join(projectRoot, 'specs', 'features', 'step_definitions');
   if (!fs.existsSync(stepDefsPath)) {
     fs.mkdirSync(stepDefsPath, { recursive: true });
-    logSuccess('features/step_definitions/ 已建立');
+    logSuccess('specs/features/step_definitions/ 已建立');
   } else {
-    logSuccess('features/step_definitions/ 已存在');
+    logSuccess('specs/features/step_definitions/ 已存在');
   }
 
   // Step 4: 提示 Google Sheet 設定
