@@ -1,5 +1,5 @@
 import { Before, After } from '@cucumber/cucumber';
-import { loadGasCodeForTesting } from '../../lib/gas-loader.js';
+import { loadGasCodeForTesting } from '../../../lib/gas-loader.js';
 
 /**
  * 全局 Before hook - 所有 scenario 執行前自動載入 GAS 測試環境

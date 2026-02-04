@@ -7,7 +7,7 @@ MAX_ES_ITEMS: 5
 
 
 # 所有規格產出物的根目錄
-SPECS_ROOT_DIR: 
+SPECS_ROOT_DIR: /specs
 
 # 事件風暴規格檔案（00-es 的產出，01-formulation 的輸入）
 ES_SPEC_PATH: ${SPECS_ROOT_DIR}/es.md

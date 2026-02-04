@@ -1,0 +1,79 @@
+// 旅遊規劃工具 - 資料模型
+
+// ========== Enums ==========
+
+Enum transportation_type {
+  PLANE [note: '飛機']
+  HIGH_SPEED_RAIL [note: '高鐵']
+  BUS [note: '客運']
+  RENTAL_CAR [note: '租車']
+  SHUTTLE [note: '接駁車']
+  OTHER [note: '其他']
+}
+
+// ========== Tables ==========
+
+// 旅遊計畫 - 一趟旅行的規劃容器
+Table trip_plan {
+  id integer [primary key, increment]
+  name varchar(100) [not null, unique, note: '計畫名稱']
+  start_date date [null, note: '出發日期（可選）']
+  end_date date [null, note: '結束日期（可選）']
+  participants integer [not null, default: 1, note: '參與人數']
+  budget_limit decimal(10,2) [null, note: '預算上限（可選）']
+  notes text [null, note: '備註']
+  created_at timestamp [not null, default: `now()`, note: '建立時間']
+
+  Note: '''
+  約束：
+  - participants >= 1
+  - end_date >= start_date（若兩者皆有填）
+  '''
+}
+
+// 住宿選項 - 記錄一個住宿地點的資訊與價格
+Table accommodation {
+  id integer [primary key, increment]
+  trip_plan_id integer [not null, ref: > trip_plan.id, note: '所屬旅遊計畫']
+  name varchar(100) [not null, note: '住宿名稱']
+  location varchar(200) [null, note: '地點']
+  price_per_night decimal(10,2) [not null, note: '每晚價格']
+  nights integer [not null, note: '入住天數']
+  total_price decimal(10,2) [not null, note: '總價（系統計算）']
+  notes text [null, note: '備註']
+  source_url varchar(500) [null, note: '來源網址']
+  created_at timestamp [not null, default: `now()`, note: '建立時間']
+
+  indexes {
+    (trip_plan_id, name) [unique]
+  }
+
+  Note: '''
+  約束：
+  - price_per_night > 0
+  - nights > 0
+  - total_price = price_per_night × nights（系統自動計算）
+  - 同一 trip_plan_id 內 name 不可重複
+  '''
+}
+
+// 交通方式 - 記錄一個交通選項的資訊與費用
+Table transportation {
+  id integer [primary key, increment]
+  trip_plan_id integer [not null, ref: > trip_plan.id, note: '所屬旅遊計畫']
+  type varchar(50) [not null, note: '交通類型']
+  origin varchar(100) [not null, note: '起點']
+  destination varchar(100) [not null, note: '終點']
+  cost decimal(10,2) [not null, note: '費用（單人）']
+  created_at timestamp [not null, default: `now()`, note: '建立時間']
+
+  indexes {
+    (trip_plan_id, type, origin, destination) [unique]
+  }
+
+  Note: '''
+  約束：
+  - cost >= 0（允許免費接駁）
+  - 同一 trip_plan_id 內 (type, origin, destination) 組合不可重複
+  '''
+}

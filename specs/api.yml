@@ -1,0 +1,393 @@
+openapi: 3.0.3
+info:
+  title: 旅遊規劃工具 API
+  description: 記錄住宿、交通選項並分析花費方案
+  version: 1.0.0
+
+paths:
+  /trip-plans:
+    post:
+      summary: 用戶 {string} 建立旅遊計畫
+      operationId: createTripPlan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTripPlanRequest'
+      responses:
+        '200':
+          description: 成功建立旅遊計畫
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripPlan'
+        '400':
+          description: 參數錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                missingName:
+                  value:
+                    error: "計畫名稱必須提供"
+                invalidParticipants:
+                  value:
+                    error: "參與人數必須大於等於 1"
+                invalidDateRange:
+                  value:
+                    error: "結束日期必須大於等於出發日期"
+        '403':
+          description: 狀態錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                duplicateName:
+                  value:
+                    error: "計畫名稱已存在"
+
+  /trip-plans/{tripPlanId}/accommodations:
+    post:
+      summary: 用戶 {string} 在旅遊計畫 {int} 新增住宿選項
+      operationId: createAccommodation
+      parameters:
+        - name: tripPlanId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccommodationRequest'
+      responses:
+        '200':
+          description: 成功新增住宿選項
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accommodation'
+        '400':
+          description: 參數錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                missingName:
+                  value:
+                    error: "住宿名稱必須提供"
+                invalidPrice:
+                  value:
+                    error: "每晚價格必須大於 0"
+                invalidDays:
+                  value:
+                    error: "入住天數必須大於 0"
+                invalidUrl:
+                  value:
+                    error: "來源網址格式錯誤"
+        '403':
+          description: 狀態錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                planNotFound:
+                  value:
+                    error: "旅遊計畫不存在"
+                duplicateName:
+                  value:
+                    error: "住宿名稱已存在"
+
+  /trip-plans/{tripPlanId}/transportations:
+    post:
+      summary: 用戶 {string} 在旅遊計畫 {int} 新增交通方式
+      operationId: createTransportation
+      parameters:
+        - name: tripPlanId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTransportationRequest'
+      responses:
+        '200':
+          description: 成功新增交通方式
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transportation'
+        '400':
+          description: 參數錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                missingType:
+                  value:
+                    error: "交通類型必須提供"
+                missingOrigin:
+                  value:
+                    error: "起點必須提供"
+                missingDestination:
+                  value:
+                    error: "終點必須提供"
+                invalidCost:
+                  value:
+                    error: "費用必須大於等於 0"
+        '403':
+          description: 狀態錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                planNotFound:
+                  value:
+                    error: "旅遊計畫不存在"
+                duplicateTransportation:
+                  value:
+                    error: "相同交通方式已存在"
+
+  /accommodations:
+    get:
+      summary: 用戶 {string} 查詢所有住宿列表
+      operationId: listAllAccommodations
+      responses:
+        '200':
+          description: 成功取得住宿列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Accommodation'
+
+  /trip-plans/{tripPlanId}/accommodations:
+    get:
+      summary: 用戶 {string} 查詢旅遊計畫 {int} 的住宿列表
+      operationId: listAccommodationsByTripPlan
+      parameters:
+        - name: tripPlanId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功取得住宿列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Accommodation'
+
+  /trip-plans/{tripPlanId}/cost-analysis:
+    get:
+      summary: 用戶 {string} 查詢旅遊計畫 {int} 的花費方案分析
+      operationId: getCostAnalysis
+      parameters:
+        - name: tripPlanId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功取得花費方案分析
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CostCombination'
+
+components:
+  schemas:
+    CreateTripPlanRequest:
+      type: object
+      required:
+        - name
+        - participants
+      properties:
+        name:
+          type: string
+          description: 計畫名稱
+        startDate:
+          type: string
+          format: date
+          description: 出發日期（可選）
+        endDate:
+          type: string
+          format: date
+          description: 結束日期（可選）
+        participants:
+          type: integer
+          minimum: 1
+          description: 參與人數
+        budgetLimit:
+          type: number
+          description: 預算上限（可選）
+        notes:
+          type: string
+          description: 備註
+
+    TripPlan:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        participants:
+          type: integer
+        budgetLimit:
+          type: number
+        notes:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateAccommodationRequest:
+      type: object
+      required:
+        - name
+        - location
+        - pricePerNight
+        - nights
+      properties:
+        name:
+          type: string
+          description: 住宿名稱
+        location:
+          type: string
+          description: 地點
+        pricePerNight:
+          type: number
+          minimum: 0
+          exclusiveMinimum: true
+          description: 每晚價格
+        nights:
+          type: integer
+          minimum: 1
+          description: 入住天數
+        notes:
+          type: string
+          description: 備註
+        sourceUrl:
+          type: string
+          format: uri
+          description: 來源網址
+
+    Accommodation:
+      type: object
+      properties:
+        id:
+          type: integer
+        tripPlanId:
+          type: integer
+        name:
+          type: string
+        location:
+          type: string
+        pricePerNight:
+          type: number
+        nights:
+          type: integer
+        totalPrice:
+          type: number
+          description: 總價（系統計算）
+        notes:
+          type: string
+        sourceUrl:
+          type: string
+
+    CreateTransportationRequest:
+      type: object
+      required:
+        - type
+        - origin
+        - destination
+        - cost
+      properties:
+        type:
+          type: string
+          description: 交通類型
+        origin:
+          type: string
+          description: 起點
+        destination:
+          type: string
+          description: 終點
+        cost:
+          type: number
+          minimum: 0
+          description: 費用
+
+    Transportation:
+      type: object
+      properties:
+        id:
+          type: integer
+        tripPlanId:
+          type: integer
+        type:
+          type: string
+        origin:
+          type: string
+        destination:
+          type: string
+        cost:
+          type: number
+
+    CostCombination:
+      type: object
+      properties:
+        accommodationName:
+          type: string
+          description: 住宿名稱
+        accommodationTotalPrice:
+          type: number
+          description: 住宿總價
+        transportationType:
+          type: string
+          description: 交通方式
+        transportationCost:
+          type: number
+          description: 交通費用
+        totalCost:
+          type: number
+          description: 組合總花費
+        costPerPerson:
+          type: number
+          description: 每人平均花費
+        exceedsBudget:
+          type: boolean
+          description: 是否超過預算
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: 錯誤訊息
