@@ -34,8 +34,8 @@ The following paths are **LOCKED** and must NEVER be modified by AI:
 | Path | Reason |
 |------|--------|
 | `lib/*` | Test infrastructure - modifying breaks Fake fidelity |
-| `features/*.feature` | Requirement contracts - specs, not implementation |
-| `features/support/hooks.js` | Global test setup |
+| `specs/features/*.feature` | Requirement contracts - specs, not implementation |
+| `specs/features/support/hooks.js` | Global test setup |
 
 **If tests fail, fix code in `src/`, NOT the test infrastructure.**
 
