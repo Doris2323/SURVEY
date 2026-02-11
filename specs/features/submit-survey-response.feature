@@ -1,4 +1,3 @@
-@ignore
 Feature: 提交問卷回覆
   為了捕捉開發者的工作流程習慣
   作為填寫 Spec Habit Survey 的受訪者

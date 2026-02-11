@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>軟體開發習慣普查</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #06070d;
+      --color-panel: #0f111c;
+      --color-panel-soft: #16182a;
+      --color-primary: #ff7a45;
+      --color-secondary: #ff4785;
+      --color-accent: #f8c24b;
+      --color-text: #f6f7fb;
+      --color-muted: #a0a3bd;
+      --color-border: rgba(255,255,255,0.12);
+      --shadow-soft: 0 25px 65px rgba(7, 6, 20, 0.55);
+      --shadow-card: 0 18px 40px rgba(15, 12, 38, 0.6);
+      --font-heading: 'Space Grotesk', 'Noto Sans TC', system-ui;
+      --font-body: 'Noto Sans TC', 'Space Grotesk', system-ui;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      color: var(--color-text);
+      background: radial-gradient(circle at 10% 20%, rgba(255, 122, 69, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 0%, rgba(255, 71, 133, 0.2), transparent 40%),
+        var(--color-bg);
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: auto auto 5% 50%;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(248, 194, 75, 0.45), transparent 70%);
+      filter: blur(80px);
+      opacity: 0.6;
+      z-index: -1;
+      animation: floatGlow 11s ease-in-out infinite;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(-50%, 0) scale(1); opacity: 0.45; }
+      50% { transform: translate(-40%, -20px) scale(1.1); opacity: 0.65; }
+      100% { transform: translate(-50%, 0) scale(1); opacity: 0.45; }
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .page-shell {
+      width: min(900px, 100% - 32px);
+      margin: 0 auto 120px;
+      padding-top: 24px;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      background: rgba(6, 7, 13, 0.85);
+      backdrop-filter: blur(18px);
+      z-index: 20;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding-inline: 28px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(15, 17, 28, 0.6);
+      color: var(--color-text);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .menu-toggle span {
+      width: 22px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .brand {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    nav a {
+      color: var(--color-muted);
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 0.92rem;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--color-text);
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      border: none;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .primary-btn {
+      background: linear-gradient(120deg, var(--color-primary), var(--color-secondary));
+      color: #050505;
+      box-shadow: 0 18px 40px rgba(255, 122, 69, 0.35);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 20px 50px rgba(255, 122, 69, 0.45);
+    }
+
+    .ghost-btn {
+      background: transparent;
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+
+    .ghost-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 36px;
+      margin-top: 48px;
+      padding: 48px;
+      border-radius: 32px;
+      background: linear-gradient(120deg, rgba(255, 122, 69, 0.14), rgba(18, 21, 49, 0.8));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 71, 133, 0.45), transparent 70%);
+      filter: blur(20px);
+      opacity: 0.4;
+      animation: orbDrift 16s ease-in-out infinite;
+    }
+
+    .hero::before {
+      top: -60px;
+      right: 10%;
+    }
+
+    .hero::after {
+      bottom: -80px;
+      left: 5%;
+      animation-delay: 4s;
+      background: radial-gradient(circle, rgba(248, 194, 75, 0.35), transparent 70%);
+    }
+
+    @keyframes orbDrift {
+      0% { transform: translateY(0) scale(0.9); }
+      50% { transform: translateY(-20px) scale(1.1); }
+      100% { transform: translateY(0) scale(0.9); }
+    }
+
+    .hero-content h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      margin: 16px 0;
+      line-height: 1.1;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .stat-card {
+      background: rgba(15, 17, 28, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px;
+      border-radius: 18px;
+      min-height: 120px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.8rem;
+      font-family: var(--font-heading);
+    }
+
+    .hero-visual {
+      position: relative;
+      border-radius: 28px;
+      padding: 32px;
+      background: rgba(5, 8, 21, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: inset 0 0 0 1px rgba(255, 122, 69, 0.15), 0 25px 45px rgba(0, 0, 0, 0.55);
+    }
+
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border-radius: 20px;
+      border: 1px dashed rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+    }
+
+    .orbit {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 0 auto;
+      position: relative;
+      animation: rotate 22s linear infinite;
+    }
+
+    .orbit span {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      background: linear-gradient(135deg, rgba(255, 122, 69, 0.18), rgba(255, 71, 133, 0.18));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(6px);
+    }
+
+    .orbit span:nth-child(1) { top: -16px; left: 50%; transform: translateX(-50%); }
+    .orbit span:nth-child(2) { right: -18px; top: 50%; transform: translateY(-50%); }
+    .orbit span:nth-child(3) { bottom: -16px; left: 50%; transform: translateX(-50%); }
+    .orbit span:nth-child(4) { left: -18px; top: 50%; transform: translateY(-50%); }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .pillars {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .pillar-card {
+      background: rgba(12, 12, 20, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 20px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pillar-card::before {
+      content: '';
+      position: absolute;
+      inset: -40% -20% auto auto;
+      background: radial-gradient(circle, rgba(255, 122, 69, 0.12), transparent 70%);
+      width: 120px;
+      height: 120px;
+      transform: rotate(25deg);
+    }
+
+    .pillar-card h3 {
+      margin-top: 0;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+    }
+
+    .survey-wrapper {
+      margin-top: 72px;
+      background: rgba(10, 12, 24, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 36px;
+      padding: 48px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .survey-wrapper header h2 {
+      margin: 0;
+      font-size: 2rem;
+      font-family: var(--font-heading);
+    }
+
+    .survey-wrapper header p {
+      color: var(--color-muted);
+      max-width: 640px;
+    }
+
+    .survey-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.4fr) minmax(280px, 1fr);
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    .progress-panel {
+      background: rgba(12, 14, 28, 0.9);
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 24px;
+      position: sticky;
+      top: 120px;
+      height: fit-content;
+    }
+
+    .progress-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 22px;
+      color: var(--color-muted);
+      transition: color 0.2s ease;
+    }
+
+    .progress-step.active {
+      color: var(--color-text);
+    }
+
+    .progress-step span {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    .progress-step.active span {
+      background: linear-gradient(120deg, var(--color-primary), var(--color-secondary));
+      color: #050505;
+      border-color: transparent;
+    }
+
+    form {
+      background: rgba(13, 15, 30, 0.9);
+      border-radius: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 32px;
+    }
+
+    .form-step {
+      display: none;
+      animation: fadeIn 0.45s ease;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-heading {
+      margin-bottom: 24px;
+    }
+
+    .step-heading h3 {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.92rem;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(11, 12, 24, 0.6);
+      color: var(--color-text);
+      padding: 12px 16px;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    .option-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      padding: 8px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      font-size: 0.88rem;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .chip input {
+      accent-color: var(--color-primary);
+    }
+
+    .form-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 32px;
+    }
+
+    .form-controls button {
+      border-radius: 999px;
+      padding: 12px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: transparent;
+      color: var(--color-text);
+      cursor: pointer;
+    }
+
+    .form-controls button.primary-btn {
+      border: none;
+    }
+
+    .status-banner {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(9, 12, 24, 0.85);
+      display: none;
+    }
+
+    .status-banner.visible {
+      display: block;
+    }
+
+    .step-alert {
+      margin-bottom: 24px;
+      padding: 12px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 71, 133, 0.4);
+      background: rgba(255, 71, 133, 0.08);
+      color: var(--color-text);
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .step-alert.visible {
+      display: block;
+    }
+
+    .form-step.invalid {
+      animation: stepShake 0.4s ease;
+    }
+
+    @keyframes stepShake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
+      100% { transform: translateX(0); }
+    }
+
+    .insights {
+      margin-top: 72px;
+    }
+
+    .insights header h2 {
+      font-size: 2rem;
+      margin: 0 0 12px;
+      font-family: var(--font-heading);
+    }
+
+    .insight-grid {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .insight-card {
+      background: rgba(13, 12, 24, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .bar {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(120deg, var(--color-primary), var(--color-secondary));
+    }
+
+    .gift-panel {
+      margin-top: 72px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      padding: 48px;
+      background: linear-gradient(140deg, rgba(255, 71, 133, 0.18), rgba(12, 14, 28, 0.95));
+      border-radius: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .gift-panel h3 {
+      margin: 0 0 16px;
+      font-size: 1.8rem;
+      font-family: var(--font-heading);
+    }
+
+    .article-list {
+      margin-top: 64px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .article-card {
+      background: rgba(11, 12, 22, 0.9);
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .article-card time {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      color: var(--color-muted);
+    }
+
+    footer {
+      margin-top: 96px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 32px 0 64px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 0.9rem;
+      color: var(--color-muted);
+    }
+
+    .badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .survey-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .progress-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .site-header {
+        flex-wrap: wrap;
+        gap: 12px;
+        position: static;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        order: 2;
+      }
+
+      .site-nav {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        max-height: 0;
+        overflow: hidden;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 0;
+        transition: max-height 0.25s ease, padding 0.25s ease;
+      }
+
+      .site-nav.is-open {
+        max-height: 220px;
+        padding-top: 12px;
+      }
+
+      .site-nav a {
+        width: 100%;
+        padding: 8px 0;
+      }
+
+      .site-header .primary-btn {
+        width: 100%;
+        order: 3;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero,
+      .survey-wrapper,
+      .gift-panel {
+        padding: 28px;
+      }
+
+      form {
+        padding: 24px;
+      }
+
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-controls {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .form-controls button {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand">Waterball Survey Lab</div>
+      <button class="menu-toggle" type="button" aria-label="切換選單" aria-controls="site-nav" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="site-nav" class="site-nav">
+        <a href="#hero">首頁</a>
+        <a href="#survey-form">問卷</a>
+        <a href="#insights">洞察</a>
+        <a href="#gift">贈品</a>
+      </nav>
+      <button class="primary-btn" data-scroll-target="#survey-form">立即填寫</button>
+    </header>
+
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Spec Habit Survey · 2026.02</p>
+        <h1>把需求寫成 vibe，讓 AI 接手完成整個系統。</h1>
+        <p>
+          這份導引式問卷將收集工程師在 AI x BDD 時代的實戰習慣，完成後即可解鎖私有 GitHub 贈品。
+          設計語言靈感取自水球軟體學院部落格，我們將濃縮相同的沉浸感，讓資料填寫與洞察瀏覽同樣優雅。
+        </p>
+        <div class="hero-actions">
+          <button class="primary-btn" data-scroll-target="#survey-form">啟動導引式問卷</button>
+          <button class="ghost-btn" data-scroll-target="#insights">檢視即時洞察</button>
+        </div>
+        <div class="hero-stats">
+          <article class="stat-card">
+            <small>累積提交</small>
+            <strong id="stat-total">0</strong>
+            <span>位工程師完成問卷</span>
+          </article>
+          <article class="stat-card">
+            <small>SDD 實踐者</small>
+            <strong id="stat-sdd">0%</strong>
+            <span>表示已把 Spec 驅動導入專案</span>
+          </article>
+          <article class="stat-card">
+            <small>AI Workflows</small>
+            <strong id="stat-ai">0%</strong>
+            <span>在多個環節使用 AI</span>
+          </article>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="orbit">
+          <span>Spec</span>
+          <span>AI</span>
+          <span>BDD</span>
+          <span>Dev</span>
+        </div>
+        <p style="text-align:center; margin-top:28px; color: var(--color-muted); font-size:0.9rem;">
+          Guided rituals · Cohort 2026
+        </p>
+      </div>
+    </section>
+
+    <section class="pillars" aria-label="焦點亮點">
+      <article class="pillar-card">
+        <h3>導引式體驗</h3>
+        <p>問卷以段落引導，像閱讀 blog 專題般清晰，避免使用者迷路。</p>
+      </article>
+      <article class="pillar-card">
+        <h3>資料即洞察</h3>
+        <p>同步聚合 dashboard，馬上看到與社群對齊的趨勢。</p>
+      </article>
+      <article class="pillar-card">
+        <h3>贈品即實戰</h3>
+        <p>完成即授與私有 repo，含前後端程式碼，可下載練習。</p>
+      </article>
+      <article class="pillar-card">
+        <h3>AI 輔助協作</h3>
+        <p>表單直接串接 Apps Script API，省去繁瑣手動比對。</p>
+      </article>
+    </section>
+
+    <section class="survey-wrapper" id="survey-form">
+      <header>
+        <h2>導引式問卷</h2>
+        <p>分為「基本資料、組織現況、學習與 SDD 認知」三大段。完成後我們會自動送出問卷、檢查必填段落，並推送 GitHub 贈品指示。</p>
+      </header>
+      <div class="survey-grid">
+        <aside class="progress-panel" aria-label="填寫進度">
+          <div class="progress-step active" data-progress-step="0">
+            <span>01</span>
+            <div>
+              <strong>基本資料</strong>
+              <p>個人檔案與職涯背景</p>
+            </div>
+          </div>
+          <div class="progress-step" data-progress-step="1">
+            <span>02</span>
+            <div>
+              <strong>組織與工作流</strong>
+              <p>AI 與測試文化現況</p>
+            </div>
+          </div>
+          <div class="progress-step" data-progress-step="2">
+            <span>03</span>
+            <div>
+              <strong>學習與 SDD</strong>
+              <p>課程需求與採訪意願</p>
+            </div>
+          </div>
+        </aside>
+        <form id="spec-survey">
+          <div class="step-alert" id="step-alert" role="alert" aria-live="polite"></div>
+          <fieldset class="form-step active" data-step="0">
+            <div class="step-heading">
+              <p class="hero-eyebrow" style="letter-spacing:0.2em;">STEP 01</p>
+              <h3>基本資料</h3>
+              <p>請留下真實聯絡資訊以便授與 GitHub 贈品，我們會遵守隱私政策。</p>
+            </div>
+            <div class="field-grid">
+              <label class="field">姓名
+                <input type="text" required data-question-code="respondent.full_name" placeholder="例如：Lin Pei">
+              </label>
+              <label class="field">Email
+                <input type="email" required data-question-code="respondent.email" placeholder="you@example.com">
+              </label>
+              <label class="field">GitHub 名稱
+                <input type="text" required data-question-code="respondent.github_name" placeholder="github-handle">
+              </label>
+              <label class="field">目前職涯階段
+                <select required data-question-code="respondent.career_stage">
+                  <option value="">請選擇</option>
+                  <option>學生 / 實習生</option>
+                  <option>正在尋找第一份軟體工作 （待業/轉職中）</option>
+                  <option>入職 0 - 1 年</option>
+                  <option>入職 1 - 3 年</option>
+                  <option>3 ~5 年以上</option>
+                  <option>5 年以上</option>
+                  <option>Tech Lead / Manager</option>
+                </select>
+              </label>
+              <label class="field">資訊相關科系背景？
+                <select required data-question-code="respondent.cs_major">
+                  <option value="">請選擇</option>
+                  <option>是</option>
+                  <option>否</option>
+                </select>
+              </label>
+              <label class="field">年薪區間
+                <select required data-question-code="respondent.compensation">
+                  <option value="">請選擇</option>
+                  <option>> 2,000,000</option>
+                  <option>1,500,000 ~ 1,999,999</option>
+                  <option>1,000,000 ~ 1,499,999</option>
+                  <option>800,000 ~ 999,999</option>
+                  <option>600,000 ~ 799,999</option>
+                  <option>400,000 ~ 599,999</option>
+                  <option>200,000 ~ 399,999</option>
+                  <option>200,000 以下</option>
+                  <option>待業中 / 就學中 / 沒薪資收入</option>
+                  <option>不便透露</option>
+                </select>
+              </label>
+            </div>
+            <div class="form-controls">
+              <span></span>
+              <button type="button" class="primary-btn" data-next>下一段</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-step" data-step="1">
+            <div class="step-heading">
+              <p class="hero-eyebrow" style="letter-spacing:0.2em;">STEP 02</p>
+              <h3>工作環境與流程</h3>
+              <p>了解公司型態、AI 導入現況與測試文化，以比對社群成熟度。</p>
+            </div>
+            <div class="field-grid">
+              <label class="field">公司/組織型態
+                <select required data-question-code="org.type">
+                  <option value="">請選擇</option>
+                  <option>軟體接案 / 專案開發 （Outsourcing / Agency）</option>
+                  <option>科技新創 / 早期團隊 （Early-stage Startup）</option>
+                  <option>成熟軟體產品服務 （Established SaaS / Product）</option>
+                  <option>電子商務 / 零售 （E-commerce / Retail）</option>
+                  <option>金融科技 / 銀行保險 （Fintech / Finance）</option>
+                  <option>傳統產業 （In-house IT）</option>
+                  <option>博弈 / 區塊鏈 （Gaming / Web3）</option>
+                  <option>求職待業中</option>
+                  <option>其他</option>
+                </select>
+              </label>
+              <label class="field">是否導入 AI 工作流程？
+                <select required data-question-code="org.ai_in_workflow" id="ai-adoption">
+                  <option value="">請選擇</option>
+                  <option value="是">是</option>
+                  <option value="否">否</option>
+                </select>
+              </label>
+              <label class="field" data-ai-section>
+                AI 導入後的感受
+                <select data-question-code="org.ai_impact">
+                  <option value="">請選擇</option>
+                  <option>非常有感，產能大幅提升，開發速度提升 10 倍</option>
+                  <option>有明顯感受，開發速度提升至少 2 倍</option>
+                  <option>無明顯感受，開發上跟 Debug 體感跟過去差不多</option>
+                  <option>不太有幫助，比較多時花時間在 AI Code Review、部分 Debug</option>
+                  <option>沒有幫助，都在幫 AI Debug ，比過去自己 Coding 更費時</option>
+                </select>
+              </label>
+              <label class="field">
+                是否有寫測試文化？
+                <select required data-question-code="org.test_culture">
+                  <option value="">請選擇</option>
+                  <option>有</option>
+                  <option>沒有</option>
+                  <option>其他</option>
+                </select>
+              </label>
+            </div>
+            <div class="field-grid" data-ai-section>
+              <label class="field">AI 使用深度
+                <select data-question-code="workflow.ai_usage">
+                  <option value="">請選擇</option>
+                  <option>使用 AI 工具建立自動化開發流程</option>
+                  <option>在多個開發環節使用 AI</option>
+                  <option>主要用 AI 輔助寫程式碼或解決問題</option>
+                  <option>偶爾使用 AI 輔助軟體開發</option>
+                  <option>很少或不將 AI 用於軟體開發工作</option>
+                </select>
+              </label>
+              <label class="field">測試程式碼熟練度
+                <select required data-question-code="workflow.testing_depth">
+                  <option value="">請選擇</option>
+                  <option>寫過完整 E2E 流程測試</option>
+                  <option>寫過類似 Fake API 的測試</option>
+                  <option>寫過實際功能的測試</option>
+                  <option>寫過基本測試</option>
+                  <option>完全沒寫過</option>
+                </select>
+              </label>
+              <label class="field">需求討論參與程度
+                <select required data-question-code="workflow.spec_participation">
+                  <option value="">請選擇</option>
+                  <option>在第一線參與討論</option>
+                  <option>提供技術解法與規格，偶爾參與需求討論</option>
+                  <option>提供技術可行性評估，並提出風險疑慮</option>
+                  <option>以接收需求規格及實作為主</option>
+                  <option>其他</option>
+                </select>
+              </label>
+            </div>
+            <div class="field">
+              <span>目前最困擾的工作情境（複選，至多兩項）</span>
+              <div class="option-list" data-max="2" data-question-code="workflow.top_confusion">
+                <label class="chip">
+                  <input type="checkbox" value="接到需求時，因為會常困擾卡在要從哪一層開始寫" data-question-code="workflow.top_confusion" data-collect="array"> 接到需求卡在起手式
+                </label>
+                <label class="chip">
+                  <input type="checkbox" value="不知道如何寫有效的測試，或寫了也不確定有沒有保護作用" data-question-code="workflow.top_confusion" data-collect="array"> 測試無法護航
+                </label>
+                <label class="chip">
+                  <input type="checkbox" value="跨團隊協作時難以對齊" data-question-code="workflow.top_confusion" data-collect="array"> 協作對齊困難
+                </label>
+                <label class="chip">
+                  <input type="checkbox" value="實踐 AI Coding 一段時間了，想往更高端實作前進，但不知道從何開始" data-question-code="workflow.top_confusion" data-collect="array"> AI 進階落差
+                </label>
+                <label class="chip">
+                  <input type="checkbox" value="其他" data-question-code="workflow.top_confusion" data-collect="array"> 其他
+                </label>
+              </div>
+              <textarea rows="3" placeholder="若選其他，請描述" data-question-code="workflow.top_confusion_other"></textarea>
+            </div>
+            <div class="form-controls">
+              <button type="button" data-prev>返回上一段</button>
+              <button type="button" class="primary-btn" data-next>進入第三段</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-step" data-step="2">
+            <div class="step-heading">
+              <p class="hero-eyebrow" style="letter-spacing:0.2em;">STEP 03</p>
+              <h3>學習規劃與 SDD 認知</h3>
+              <p>理解你如何覓得資源、是否聽過水球課程，以及是否願意收到後續訪談邀請。</p>
+            </div>
+            <div class="field-grid">
+              <label class="field">近期是否進修
+                <select required data-question-code="learning.has_training">
+                  <option value="">請選擇</option>
+                  <option>是</option>
+                  <option>否</option>
+                </select>
+              </label>
+              <label class="field">決策關鍵
+                <select required data-question-code="learning.decision_factor">
+                  <option value="">請選擇</option>
+                  <option>講師背景、教學經驗與學員的評價</option>
+                  <option>課程大綱與學習內容是否實用</option>
+                  <option>費用是否合理，以及是否有優惠或分期方案</option>
+                  <option>上課時間與地點的安排是否便利</option>
+                </select>
+              </label>
+              <label class="field">SDD 認知程度
+                <select required data-question-code="sdd.awareness">
+                  <option value="">請選擇</option>
+                  <option>理解概念，有實際運用在軟體開發專案中</option>
+                  <option>理解概念，未使用實際運用在軟體開發專案中</option>
+                  <option>聽過名稱，但不太清楚具體是什麼</option>
+                  <option>沒聽過，會想進一步了解</option>
+                  <option>不感興趣</option>
+                </select>
+              </label>
+              <label class="field">若 AI x SDD 能替你解決一個問題
+                <select required data-question-code="sdd.primary_need">
+                  <option value="">請選擇</option>
+                  <option>加速開發效率</option>
+                  <option>提升程式碼品質與可維護性</option>
+                  <option>增強跨團隊溝通能力</option>
+                  <option>增加規格驅動 + AI 的差異化技能</option>
+                  <option>其他</option>
+                </select>
+              </label>
+              <label class="field">是否聽過水球軟體學院
+                <select required data-question-code="academy.heard_waterball">
+                  <option value="">請選擇</option>
+                  <option>是</option>
+                  <option>否</option>
+                </select>
+              </label>
+              <label class="field">AI x BDD 工作坊興趣
+                <select required data-question-code="academy.workshop_interest">
+                  <option value="">請選擇</option>
+                  <option>非常有興趣，希望能參加</option>
+                  <option>有興趣，但需要了解更多細節</option>
+                  <option>有點興趣，但時間或預算可能有困難</option>
+                  <option>興趣不高，可能不會參加</option>
+                  <option>不確定，需要更多資訊</option>
+                </select>
+              </label>
+              <label class="field">同意深度訪談？
+                <select required data-question-code="academy.accept_interview">
+                  <option value="">請選擇</option>
+                  <option>願意</option>
+                  <option>不願意</option>
+                </select>
+              </label>
+              <label class="field">可訪談時段
+                <select data-question-code="academy.interview_slots">
+                  <option value="">請選擇</option>
+                  <option>週一至週五，10:00~18:00</option>
+                  <option>週一至週五，19:00~21:00</option>
+                  <option>星期六、日，10:00~18:00</option>
+                </select>
+              </label>
+            </div>
+            <label class="field">最近一次的進修主題
+              <textarea rows="3" data-question-code="learning.latest_topic" placeholder="課程名稱或主題"></textarea>
+            </label>
+            <div class="field">
+              <span>你通常透過哪些渠道探索資源？（複選）</span>
+              <div class="option-list">
+                <label class="chip">
+                  <input type="checkbox" value="技術社群或論壇" data-question-code="learning.discovery_channels" data-collect="array"> 技術社群
+                </label>
+                <label class="chip">
+                  <input type="checkbox" value="同事或朋友推薦" data-question-code="learning.discovery_channels" data-collect="array"> 同事推薦
+                </label>
+              </div>
+              <div class="option-list">
+                <label class="chip">
+                  <input type="checkbox" value="搜尋引擎" data-question-code="learning.discovery_channels" data-collect="array"> 搜尋/社群媒體
+                </label>
+                <label class="chip">
+                  <input type="checkbox" value="技術部落格" data-question-code="learning.discovery_channels" data-collect="array"> 技術部落格/電子報
+                </label>
+                <label class="chip">
+                  <input type="checkbox" value="很少使用管道" data-question-code="learning.discovery_channels" data-collect="array"> 很少使用
+                </label>
+              </div>
+            </div>
+            <div class="field">
+              <span>主要資源取得方式（複選）</span>
+              <div class="option-list">
+                <label class="chip">
+                  <input type="checkbox" value="公司付費、補助或內訓" data-question-code="learning.funding_sources" data-collect="array"> 公司資源
+                </label>
+                <label class="chip">
+                  <input type="checkbox" value="自費參加" data-question-code="learning.funding_sources" data-collect="array"> 自費參加
+                </label>
+                <label class="chip">
+                  <input type="checkbox" value="免費資源" data-question-code="learning.funding_sources" data-collect="array"> 免費資源
+                </label>
+              </div>
+            </div>
+            <div class="field">
+              <span>曾聽過的課程（複選）</span>
+              <div class="option-list">
+                <label class="chip"><input type="checkbox" value="軟體設計模式精通之旅" data-question-code="academy.heard_courses" data-collect="array"> 設計模式精通</label>
+                <label class="chip"><input type="checkbox" value="AI x BDD：規格驅動全自動化開發術" data-question-code="academy.heard_courses" data-collect="array"> AI x BDD</label>
+                <label class="chip"><input type="checkbox" value="AI 時代的 1% 工程師" data-question-code="academy.heard_courses" data-collect="array"> 1% 工程師</label>
+                <label class="chip"><input type="checkbox" value="以上都沒聽過" data-question-code="academy.heard_courses" data-collect="array"> 尚未聽過</label>
+              </div>
+            </div>
+            <div class="form-controls">
+              <button type="button" data-prev>上一步</button>
+              <button type="submit" class="primary-btn">送出問卷並索取贈品</button>
+            </div>
+            <div class="status-banner" id="form-status" role="status"></div>
+          </fieldset>
+        </form>
+      </div>
+    </section>
+
+    <section class="insights" id="insights">
+      <header>
+        <h2>即時洞察</h2>
+        <p>引用 Apps Script API `getSurveyResponses` 與 `getSurveyResponseAggregations`，同步產生和 blog 文章一樣好閱讀的資料卡。</p>
+      </header>
+      <div class="insight-grid" id="aggregation-cards"></div>
+      <div class="article-list" id="recent-submissions"></div>
+    </section>
+
+    <section class="gift-panel" id="gift">
+      <div>
+        <p class="hero-eyebrow" style="letter-spacing:0.28em;">GitHub Gift</p>
+        <h3>完成後立即邀請至私有 Repo</h3>
+        <p>我們會將你提交的 Email 與 GitHub 名稱送至 `grantGithubAccess` 流程，驗證通過後寄出協作者邀請，並透過 Email 告知連結與 seven-day SLA。</p>
+        <ul>
+          <li>自動比對 email，避免偽冒。</li>
+          <li>超過 24 小時的 pending 邀請會自動排程重試。</li>
+          <li>GitHub 回覆 201 / 204 視為成功並同步回寫 Sheet。</li>
+        </ul>
+      </div>
+      <div>
+        <h4>贈品內含</h4>
+        <div class="badges">
+          <span class="badge">Next.js + Tailwind</span>
+          <span class="badge">Apps Script 自動化</span>
+          <span class="badge">Cucumber feature</span>
+        </div>
+        <p style="margin-top:18px;">這份 repo 直接對應本專案的測試案例，你可以在本地端跑 npm test 體驗 Spec 驅動的節奏。</p>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 水球軟體學院 · Spec Habit Survey</span>
+      <span>support@waterballsa.tw</span>
+      <div class="badges">
+        <span class="badge">AI x BDD</span>
+        <span class="badge">Executable Spec</span>
+        <span class="badge">Cohort 2026</span>
+      </div>
+    </footer>
+  </div>
+
+  <template id="submission-card-template">
+    <article class="article-card">
+      <time></time>
+      <h3></h3>
+      <p class="summary"></p>
+      <p class="tags" style="color: var(--color-accent);"></p>
+    </article>
+  </template>
+
+  <script>
+    const fallbackAggregations = {
+      career_stage: {
+        question_code: 'career_stage',
+        breakdown: [
+          { option: '入職 0 - 1 年', count: 20, percentage: '18.2%' },
+          { option: '入職 1 - 3 年', count: 32, percentage: '29.1%' },
+          { option: '3 ~5 年以上', count: 30, percentage: '27.3%' },
+          { option: '5 年以上', count: 24, percentage: '21.8%' }
+        ]
+      },
+      workflow_ai_usage: {
+        question_code: 'workflow.ai_usage',
+        breakdown: [
+          { option: '在多個開發環節使用 AI', count: 40, percentage: '41.0%' },
+          { option: '主要用 AI 輔助寫程式碼或解決問題', count: 28, percentage: '28.7%' },
+          { option: '偶爾使用', count: 16, percentage: '16.4%' }
+        ]
+      }
+    };
+
+    const fallbackSubmissions = [
+      {
+        submission_id: 'SR-20260211-001',
+        respondent: { full_name: 'Lin Pei', email: 'lin@example.com', github_name: 'linpei' },
+        submitted_at: '2026-02-11T01:00:00Z',
+        sections: {
+          respondent: { career_stage: '入職 1 - 3 年' },
+          workflow: { ai_usage: '在多個開發環節使用 AI' }
+        }
+      },
+      {
+        submission_id: 'SR-20260211-002',
+        respondent: { full_name: 'Suelyn', email: 'suelyn@example.com', github_name: 'suelyn' },
+        submitted_at: '2026-02-11T01:08:00Z',
+        sections: {
+          respondent: { career_stage: 'Tech Lead / Manager' },
+          workflow: { ai_usage: '使用 AI 工具建立自動化開發流程' }
+        }
+      }
+    ];
+
+    const gasFallback = {
+      submitSurveyResponse(payload) {
+        return Promise.resolve({
+          submission_id: `SR-${new Date().toISOString().slice(0,10).replace(/-/g,'')}-${Math.floor(Math.random()*900+100)}`,
+          respondent_id: `RESP-${Date.now()}`,
+          status: 'completed'
+        });
+      },
+      getSurveyResponseAggregations(params) {
+        const value = fallbackAggregations[params.question_code] || fallbackAggregations.career_stage;
+        return Promise.resolve({ statusCode: 200, body: value });
+      },
+      getSurveyResponses(params) {
+        return Promise.resolve({
+          statusCode: 200,
+          body: { page: { limit: params?.limit || 3, next_cursor: '' }, data: fallbackSubmissions }
+        });
+      }
+    };
+
+    function callGas(method, ...args) {
+      return new Promise((resolve, reject) => {
+        if (window.google?.script?.run?.withSuccessHandler) {
+          window.google.script.run
+            .withSuccessHandler(resolve)
+            .withFailureHandler(err => reject(typeof err === 'string' ? new Error(err) : err))[method](...args);
+          return;
+        }
+        if (typeof gasFallback[method] === 'function') {
+          gasFallback[method](...args).then(resolve).catch(reject);
+          return;
+        }
+        reject(new Error(`Method ${method} not available`));
+      });
+    }
+
+    const form = document.getElementById('spec-survey');
+    const steps = Array.from(document.querySelectorAll('.form-step'));
+    const progressSteps = Array.from(document.querySelectorAll('[data-progress-step]'));
+    const stepAlert = document.getElementById('step-alert');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const siteNav = document.getElementById('site-nav');
+    let currentStep = 0;
+
+    function setStep(index) {
+      currentStep = Math.max(0, Math.min(steps.length - 1, index));
+      steps.forEach((step, idx) => step.classList.toggle('active', idx === currentStep));
+      progressSteps.forEach((node, idx) => node.classList.toggle('active', idx === currentStep));
+    }
+
+    function showStepAlert(message = '') {
+      if (!stepAlert) return;
+      stepAlert.textContent = message;
+      stepAlert.classList.toggle('visible', Boolean(message));
+    }
+
+    function validateStep(index) {
+      const fieldset = steps[index];
+      if (!fieldset) {
+        return true;
+      }
+      const requiredFields = Array.from(fieldset.querySelectorAll('[required]')).filter(field => !field.disabled);
+      for (const field of requiredFields) {
+        const value = typeof field.value === 'string' ? field.value.trim() : field.value;
+        const isValid = typeof field.checkValidity === 'function' ? field.checkValidity() : Boolean(value);
+        if (!isValid || !value) {
+          fieldset.classList.add('invalid');
+          field.reportValidity?.();
+          field.focus();
+          setTimeout(() => fieldset.classList.remove('invalid'), 450);
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function validateAllSteps() {
+      for (let idx = 0; idx < steps.length; idx += 1) {
+        if (!validateStep(idx)) {
+          setStep(idx);
+          showStepAlert('請完成全部段落後再送出。');
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function handleStepChange(direction) {
+      if (direction > 0 && !validateStep(currentStep)) {
+        showStepAlert('請先完成這個段落的必填題目。');
+        return;
+      }
+      showStepAlert('');
+      setStep(currentStep + direction);
+    }
+
+    document.querySelectorAll('[data-next]').forEach(btn => btn.addEventListener('click', () => handleStepChange(1)));
+    document.querySelectorAll('[data-prev]').forEach(btn => btn.addEventListener('click', () => handleStepChange(-1)));
+
+    menuToggle?.addEventListener('click', () => {
+      const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!expanded));
+      siteNav?.classList.toggle('is-open', !expanded);
+    });
+
+    siteNav?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.matchMedia('(max-width: 760px)').matches) {
+          menuToggle?.setAttribute('aria-expanded', 'false');
+          siteNav?.classList.remove('is-open');
+        }
+      });
+    });
+
+    document.querySelectorAll('[data-scroll-target]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = document.querySelector(btn.getAttribute('data-scroll-target'));
+        target?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    function collectPayload() {
+      const payload = {};
+      const arrays = {};
+      const fields = form.querySelectorAll('[data-question-code]');
+      fields.forEach(field => {
+        const code = field.dataset.questionCode;
+        if (field.type === 'checkbox') {
+          if (!arrays[code]) arrays[code] = [];
+          if (field.checked) {
+            arrays[code].push(field.value);
+          }
+          return;
+        }
+        if (field.type === 'radio') {
+          if (field.checked) {
+            payload[code] = field.value;
+          }
+          return;
+        }
+        if (field.tagName === 'SELECT' || field.tagName === 'TEXTAREA' || field.tagName === 'INPUT') {
+          payload[code] = field.value.trim();
+        }
+      });
+      Object.entries(arrays).forEach(([code, values]) => {
+        payload[code] = values;
+      });
+      if (Array.isArray(payload['workflow.top_confusion'])) {
+        payload['workflow.top_confusion'] = {
+          selections: payload['workflow.top_confusion'],
+          other_text: payload['workflow.top_confusion_other'] || ''
+        };
+        delete payload['workflow.top_confusion_other'];
+      }
+      return payload;
+    }
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      const statusBanner = document.getElementById('form-status');
+      statusBanner.classList.remove('visible');
+      statusBanner.textContent = '傳送中…';
+      statusBanner.classList.add('visible');
+      if (!validateAllSteps()) {
+        statusBanner.textContent = '請確認所有段落都已完成必填題目。';
+        statusBanner.style.borderColor = 'rgba(255, 71, 133, 0.6)';
+        return;
+      }
+      try {
+        const payload = collectPayload();
+        const result = await callGas('submitSurveyResponse', payload);
+        statusBanner.textContent = `已成功送出（${result.submission_id}），請查收 Email 以接受 GitHub 邀請。`;
+        statusBanner.style.borderColor = 'rgba(248, 194, 75, 0.6)';
+        form.reset();
+        setStep(0);
+        showStepAlert('');
+      } catch (error) {
+        statusBanner.textContent = `送出失敗：${error.message}`;
+        statusBanner.style.borderColor = 'rgba(255, 71, 133, 0.6)';
+      }
+    });
+
+    document.querySelectorAll('.option-list[data-max]').forEach(list => {
+      const max = Number(list.dataset.max) || Infinity;
+      list.addEventListener('change', event => {
+        if (event.target.type !== 'checkbox') return;
+        const checked = list.querySelectorAll('input:checked');
+        if (checked.length > max) {
+          event.target.checked = false;
+        }
+      });
+    });
+
+    const aiSelect = document.getElementById('ai-adoption');
+    aiSelect?.addEventListener('change', () => {
+      const isNo = aiSelect.value === '否';
+      document.querySelectorAll('[data-ai-section]').forEach(node => {
+        node.style.opacity = isNo ? 0.4 : 1;
+        node.querySelectorAll('input, select, textarea').forEach(field => {
+          field.disabled = isNo && field.dataset.questionCode !== 'workflow.testing_depth';
+        });
+      });
+    });
+
+    async function hydrateInsights() {
+      try {
+        const agg = await callGas('getSurveyResponseAggregations', { question_code: 'career_stage' });
+        renderAggregations(agg.body || fallbackAggregations.career_stage);
+      } catch (error) {
+        renderAggregations(fallbackAggregations.career_stage);
+      }
+
+      try {
+        const response = await callGas('getSurveyResponses', { limit: 3 });
+        renderSubmissions(response.body?.data || fallbackSubmissions);
+        updateStats(response.body?.data || fallbackSubmissions);
+      } catch (error) {
+        renderSubmissions(fallbackSubmissions);
+        updateStats(fallbackSubmissions);
+      }
+    }
+
+    function renderAggregations(data) {
+      const container = document.getElementById('aggregation-cards');
+      container.innerHTML = '';
+      data.breakdown.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'insight-card';
+        card.innerHTML = `
+          <h4>${item.option}</h4>
+          <strong>${item.count}</strong>
+          <p>${item.percentage}</p>
+          <div class="bar"><span style="width:${item.percentage}"></span></div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderSubmissions(list) {
+      const container = document.getElementById('recent-submissions');
+      container.innerHTML = '';
+      list.forEach(item => {
+        const tpl = document.getElementById('submission-card-template');
+        const card = tpl.content.firstElementChild.cloneNode(true);
+        const submitted = new Date(item.submitted_at || Date.now());
+        card.querySelector('time').textContent = submitted.toLocaleDateString('zh-TW', { month: 'short', day: 'numeric' });
+        card.querySelector('h3').textContent = `${item.respondent?.full_name ?? '匿名'} · ${item.respondent?.github_name ?? ''}`;
+        card.querySelector('.summary').textContent = `AI 使用：${item.sections?.workflow?.ai_usage || '未填寫'}，職涯：${item.sections?.respondent?.career_stage || '未填寫'}`;
+        card.querySelector('.tags').textContent = item.submission_id;
+        container.appendChild(card);
+      });
+    }
+
+    function updateStats(list) {
+      const total = list.length;
+      const aiCount = list.filter(item => /AI/.test(item.sections?.workflow?.ai_usage || '')).length;
+      const sddCount = list.filter(item => /SDD|Spec/.test(JSON.stringify(item.sections || ''))).length;
+      document.getElementById('stat-total').textContent = total.toString().padStart(2, '0');
+      document.getElementById('stat-ai').textContent = total ? `${Math.round((aiCount / total) * 100)}%` : '0%';
+      document.getElementById('stat-sdd').textContent = total ? `${Math.round((sddCount / total) * 100)}%` : '0%';
+    }
+
+    hydrateInsights();
+  </script>
+</body>
+</html>

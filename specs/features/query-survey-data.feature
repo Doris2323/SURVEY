@@ -1,4 +1,3 @@
-@ignore
 Feature: 查詢問卷資料以供分析
   為了檢視聚合洞察並排查提交問題
   作為內部分析師或自動化儀表板
@@ -15,6 +14,7 @@ Feature: 查詢問卷資料以供分析
       | SR-20260211-002 | 2026-02-11T01:05Z |
     When 分析師呼叫 GET /api/survey-responses?limit=2&cursor=
     Then API 會以 HTTP 200 回傳下列內容
+      """
       "page": {
         "limit": 2,
         "next_cursor": "eyJvZmZzZXQiOjJ9"
@@ -33,6 +33,7 @@ Feature: 查詢問卷資料以供分析
           }
         }
       ]
+      """
     And 每筆回應都包含依 question_code 儲存的完整段落 JSON
 
   Scenario: 匯出單選題的統計結果
