@@ -8,15 +8,12 @@ Before(function() {
   const ctx = loadGasCodeForTesting({
     sheets: {
       // 根據 specs/erm.dbml 配置
-      '旅遊計畫': ['name', 'start_date', 'end_date', 'participants', 'budget_limit', 'notes', 'createdAt'],
-      '住宿選項': ['trip_plan_id', 'name', 'location', 'price_per_night', 'nights', 'total_price', 'notes', 'source_url', 'createdAt'],
-      '交通方式': ['trip_plan_id', 'type', 'origin', 'destination', 'cost', 'createdAt']
     }
   });
 
   // Clear all sheets for test isolation
   const ss = ctx.SpreadsheetApp.getActiveSpreadsheet();
-  ['旅遊計畫', '住宿選項', '交通方式'].forEach(sheetName => {
+  ['旅遊計畫', '住宿選項', '交通方式', '旅遊方案', '方案住宿安排', '方案交通安排'].forEach(sheetName => {
     const sheet = ss.getSheetByName(sheetName);
     if (sheet) sheet.clear();
   });

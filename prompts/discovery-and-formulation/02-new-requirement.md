@@ -2,7 +2,7 @@
 name: new-requirement
 description: Coordinate requirement changes (add/modify/delete) across all spec artifacts by analyzing impact and delegating to existing prompts.
 args:
-  SPECS_ROOT_DIR: spec
+  SPECS_ROOT_DIR: /specs
   ES_SPEC_PATH: ${SPECS_ROOT_DIR}/es.md
   FEATURE_SPECS_DIR: ${SPECS_ROOT_DIR}/features
   API_SPECS_DIR: ${SPECS_ROOT_DIR}

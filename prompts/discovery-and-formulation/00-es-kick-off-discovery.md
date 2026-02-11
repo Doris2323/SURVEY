@@ -2,11 +2,11 @@
 name: es-kick-off-discovery
 description: Clarify raw user ideas through Event Storming concepts, producing a structured ES markdown as input for the formulation stage.
 args:
-  SPECS_ROOT_DIR: spec
+  SPECS_ROOT_DIR: /specs
   ES_SPEC_PATH: ${SPECS_ROOT_DIR}/es.md
   MAX_QUESTIONS_PER_ROUND: 10
-  MAX_ES_ITEMS: 20
-  DFS_BANDWIDTH: 1
+  MAX_ES_ITEMS: 5
+  DFS_BANDWIDTH: 3
 input: User idea (raw text)
 output: ${ES_SPEC_PATH}
 ---

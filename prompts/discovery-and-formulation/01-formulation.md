@@ -2,7 +2,7 @@
 name: formulation
 description: Orchestrate the formulation stage — manage knowledge map, route between concerns, and coordinate incremental updates to produce feature files, API spec, and entity model.
 args:
-  SPECS_ROOT_DIR: spec
+  SPECS_ROOT_DIR: /specs
   ES_SPEC_PATH: ${SPECS_ROOT_DIR}/es.md
   FEATURE_SPECS_DIR: ${SPECS_ROOT_DIR}/features
   API_SPECS_DIR: ${SPECS_ROOT_DIR}
