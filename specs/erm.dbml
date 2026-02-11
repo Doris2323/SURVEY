@@ -1,0 +1,74 @@
+Project SpecHabitSurvey {
+  database_type: "google-sheets-json"
+  note: "Logical entity model for the Apps Script + Google Sheets backend"
+}
+
+Table questionnaire {
+  questionnaire_id varchar [pk]
+  version varchar [unique]
+  status varchar // draft | active | archived
+  section_order json
+  created_at datetime
+  published_at datetime
+}
+
+Table respondent {
+  respondent_id varchar [pk]
+  full_name varchar
+  email varchar [unique]
+  github_name varchar
+  career_stage varchar
+  cs_major boolean
+  compensation_band varchar
+  organization_type varchar
+  created_at datetime
+}
+
+Table survey_response {
+  submission_id varchar [pk]
+  questionnaire_id varchar [ref: > questionnaire.questionnaire_id]
+  respondent_id varchar [ref: > respondent.respondent_id]
+  questionnaire_version varchar
+  submitted_at datetime
+  submitted_from varchar // web | admin
+  completion_status varchar // draft | completed | invalidated
+  has_reward_grant boolean
+  note: "Each submission maps to a Google Sheet row"
+}
+
+Table question_answer {
+  answer_id varchar [pk]
+  submission_id varchar [ref: > survey_response.submission_id]
+  question_code varchar
+  answer_json json
+  skipped_due_to varchar
+  sheet_cell_ref varchar
+  updated_at datetime
+  note: "One record per Google Sheet cell (question_code) with JSON payload"
+}
+
+Table reward_grant {
+  grant_id varchar [pk]
+  submission_id varchar [ref: > survey_response.submission_id]
+  github_name varchar
+  email varchar
+  status varchar // pending | granted | failed
+  failure_reason varchar
+  last_attempt_at datetime
+  granted_at datetime
+}
+
+Table audit_event {
+  event_id varchar [pk]
+  submission_id varchar [ref: > survey_response.submission_id]
+  event_type varchar
+  payload json
+  created_at datetime
+  note: "Captures verification checks, GitHub API calls, and manual overrides"
+}
+
+Ref: questionnaire.questionnaire_id < survey_response.questionnaire_id
+Ref: respondent.respondent_id < survey_response.respondent_id
+Ref: survey_response.submission_id < question_answer.submission_id
+Ref: survey_response.submission_id < reward_grant.submission_id
+Ref: survey_response.submission_id < audit_event.submission_id

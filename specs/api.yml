@@ -1,0 +1,331 @@
+openapi: 3.1.0
+info:
+  title: Spec Habit Survey API
+  version: "2026-02-11"
+  description: |
+    APIs that back the Spec Habit Survey Google Sheet + Apps Script workflow.
+    - Every question answer is persisted in Google Sheets as a JSON string that includes `question_code`, `value`, and optional metadata.
+    - Reward automation endpoints verify the respondent's email + GitHub handle before adding them as collaborators to the private repository.
+servers:
+  - url: https://script.google.com/macros/s/survey-prod/exec
+    description: Google Apps Script production deployment
+  - url: https://script.google.com/macros/s/survey-dev/exec
+    description: QA deployment used during prompt iterations
+tags:
+  - name: Survey Responses
+  - name: Analytics
+  - name: Rewards
+
+paths:
+  /survey-responses:
+    post:
+      tags: [Survey Responses]
+      summary: Submit a completed questionnaire
+      description: Accepts the entire multi-section payload, validates mandatory questions, and stores each answer as JSON per Google Sheet cell.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurveySubmissionRequest'
+      responses:
+        '201':
+          description: Submission created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveySubmissionResponse'
+        '400':
+          description: Validation failed (missing required answers, invalid conditional logic)
+        '409':
+          description: Duplicate submission detected for the same email + questionnaire version
+    get:
+      tags: [Survey Responses]
+      summary: List survey responses in reverse chronological order
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/SubmittedAfter'
+        - $ref: '#/components/parameters/HasRewardGrant'
+      responses:
+        '200':
+          description: A page of survey responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    $ref: '#/components/schemas/Pagination'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SurveyResponse'
+  /survey-responses/{submissionId}:
+    get:
+      tags: [Survey Responses]
+      summary: Fetch a single survey response by submission_id
+      parameters:
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Single survey response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyResponse'
+        '404':
+          description: submission_id not found
+  /survey-responses/aggregations:
+    get:
+      tags: [Analytics]
+      summary: Aggregate a question's answers
+      parameters:
+        - name: question_code
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: grouping
+          in: query
+          schema:
+            type: string
+            enum: [count, percent]
+            default: count
+        - name: filters
+          in: query
+          schema:
+            type: object
+            additionalProperties: true
+      responses:
+        '200':
+          description: Aggregated counts and percentages
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  question_code:
+                    type: string
+                  buckets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        option:
+                          type: string
+                        count:
+                          type: integer
+                        percent:
+                          type: number
+                          format: float
+  /rewards/github-access:
+    post:
+      tags: [Rewards]
+      summary: Request GitHub repository access after survey completion
+      description: Verifies email + GitHub handle against the submitted survey before calling the GitHub Collaborators API.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RewardRequest'
+      responses:
+        '202':
+          description: Invitation sent or queued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RewardGrant'
+        '400':
+          description: Verification failed (email mismatch, GitHub account invalid)
+  /rewards/github-access/{grantId}/retry:
+    post:
+      tags: [Rewards]
+      summary: Retry a pending GitHub collaborator invitation
+      parameters:
+        - name: grantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retry result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RewardGrant'
+        '404':
+          description: grantId not found
+
+components:
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+        description: Base64 encoded offset token
+    SubmittedAfter:
+      name: submitted_after
+      in: query
+      schema:
+        type: string
+        format: date-time
+    HasRewardGrant:
+      name: has_reward_grant
+      in: query
+      schema:
+        type: boolean
+  schemas:
+    SurveySubmissionRequest:
+      type: object
+      required: [questionnaire_version, respondent, sections]
+      properties:
+        questionnaire_version:
+          type: string
+          example: "2026.02"
+        respondent:
+          $ref: '#/components/schemas/RespondentInput'
+        sections:
+          type: object
+          description: Map of section identifiers to arrays of question answers.
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/QuestionAnswer'
+        metadata:
+          type: object
+          properties:
+            submitted_from:
+              type: string
+              enum: [web, admin]
+            client_timestamp:
+              type: string
+              format: date-time
+    RespondentInput:
+      type: object
+      required: [full_name, email, github_name]
+      properties:
+        full_name:
+          type: string
+        email:
+          type: string
+          format: email
+        github_name:
+          type: string
+          pattern: "^[a-zA-Z0-9-]{1,39}$"
+        career_stage:
+          type: string
+        cs_major:
+          type: boolean
+        compensation_band:
+          type: string
+        organization_type:
+          type: string
+    QuestionAnswer:
+      type: object
+      required: [question_code, value]
+      properties:
+        question_code:
+          type: string
+        value:
+          description: Raw answer payload (string, number, boolean, array, or object)
+          oneOf:
+            - type: string
+            - type: number
+            - type: integer
+            - type: boolean
+            - type: array
+              items: {}
+            - type: object
+        metadata:
+          type: object
+          properties:
+            skipped_due_to:
+              type: string
+              description: Reason for auto-skip (e.g., ai_not_adopted)
+            other_text:
+              type: string
+              description: Free-text when "其他" is selected
+    SurveySubmissionResponse:
+      type: object
+      properties:
+        submission_id:
+          type: string
+        status:
+          type: string
+          enum: [completed]
+        reward_grant:
+          $ref: '#/components/schemas/RewardGrant'
+    SurveyResponse:
+      type: object
+      properties:
+        submission_id:
+          type: string
+        questionnaire_version:
+          type: string
+        submitted_at:
+          type: string
+          format: date-time
+        respondent:
+          $ref: '#/components/schemas/RespondentInput'
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionAnswer'
+        reward_grant:
+          $ref: '#/components/schemas/RewardGrant'
+    RewardRequest:
+      type: object
+      required: [submission_id, email, github_name]
+      properties:
+        submission_id:
+          type: string
+        email:
+          type: string
+          format: email
+        github_name:
+          type: string
+        locale:
+          type: string
+          description: Used to localize reward email copy
+    RewardGrant:
+      type: object
+      properties:
+        grant_id:
+          type: string
+        submission_id:
+          type: string
+        github_name:
+          type: string
+        status:
+          type: string
+          enum: [pending, granted, failed]
+        last_attempt_at:
+          type: string
+          format: date-time
+        failure_reason:
+          type: string
+          nullable: true
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+        next_cursor:
+          type: string
+          nullable: true
