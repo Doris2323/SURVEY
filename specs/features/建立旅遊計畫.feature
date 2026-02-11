@@ -1,4 +1,3 @@
-@ignore
 Feature: 建立旅遊計畫
 
   Background:

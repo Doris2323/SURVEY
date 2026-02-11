@@ -1,4 +1,3 @@
-@ignore
 Feature: 新增住宿選項
 
   Background:

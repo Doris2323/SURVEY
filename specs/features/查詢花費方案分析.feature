@@ -1,4 +1,3 @@
-@ignore
 Feature: 查詢花費方案分析
 
   Background:

@@ -24,9 +24,6 @@ export default {
     'html:reports/cucumber-report.html'
   ],
 
-  // 語言設定（支援中文）
-  language: 'zh-TW',
-
   // 失敗時停止
   failFast: false,
 

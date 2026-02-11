@@ -7,16 +7,21 @@ import { loadGasCodeForTesting } from '../../../lib/gas-loader.js';
 Before(function() {
   const ctx = loadGasCodeForTesting({
     sheets: {
-      '打卡記錄': ['類型', '時間', 'createdAt']
+      // 根據 specs/erm.dbml 配置
+      '旅遊計畫': ['name', 'start_date', 'end_date', 'participants', 'budget_limit', 'notes', 'createdAt'],
+      '住宿選項': ['trip_plan_id', 'name', 'location', 'price_per_night', 'nights', 'total_price', 'notes', 'source_url', 'createdAt'],
+      '交通方式': ['trip_plan_id', 'type', 'origin', 'destination', 'cost', 'createdAt']
     }
   });
 
-  // Clear sheet for test isolation
-  const sheet = ctx.SpreadsheetApp.getActiveSpreadsheet().getSheetByName('打卡記錄');
-  sheet.clear();
-  
-  // 設定默認的 mock 時間為 2026/1/27 上午 10:00:00
-  // 這樣所有沒有明確指定時間的打卡操作都會使用這個時間
+  // Clear all sheets for test isolation
+  const ss = ctx.SpreadsheetApp.getActiveSpreadsheet();
+  ['旅遊計畫', '住宿選項', '交通方式'].forEach(sheetName => {
+    const sheet = ss.getSheetByName(sheetName);
+    if (sheet) sheet.clear();
+  });
+
+  // 設定默認的 mock 時間
   ctx._setMockTime('2026/1/27上午10:00:00');
 
   this.ctx = ctx;

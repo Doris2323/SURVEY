@@ -1,4 +1,3 @@
-@ignore
 Feature: 新增交通方式
 
   Background:

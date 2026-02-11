@@ -1,4 +1,3 @@
-@ignore
 Feature: 查詢住宿列表
 
   Background:
